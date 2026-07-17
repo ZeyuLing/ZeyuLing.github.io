@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Zeyu Ling is an AI researcher working on 3D human motion generation, multimodal learning, and controllable generative models."
+    />
+    <meta name="theme-color" content="#f5f5f0" />
+    <meta property="og:title" content="Zeyu Ling | AI Researcher" />
+    <meta
+      property="og:description"
+      content="Research in 3D human motion, multimodal generation, and controllable generative models."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="avatar/avatar.jpg" />
+    <title>Zeyu Ling | AI Researcher</title>
+    <link rel="icon" href="avatar/avatar.jpg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header" id="top">
+      <a class="wordmark" href="#top" aria-label="Zeyu Ling, home">
+        <span class="wordmark-mark">ZL</span>
+        <span class="wordmark-name">Zeyu Ling</span>
+      </a>
+
+      <nav class="desktop-nav" aria-label="Primary navigation">
+        <a href="#research" data-i18n="nav.research">Research</a>
+        <a href="#demos" data-i18n="nav.demos">Demos</a>
+        <a href="#publications" data-i18n="nav.publications">Publications</a>
+        <a href="#open-source" data-i18n="nav.openSource">Open source</a>
+        <a href="#journey" data-i18n="nav.journey">Journey</a>
+      </nav>
+
+      <div class="header-tools">
+        <button class="icon-button language-toggle" type="button" aria-label="Switch to Chinese" title="Switch language">
+          <span aria-hidden="true">中</span>
+        </button>
+        <button class="icon-button theme-toggle" type="button" aria-label="Use dark theme" title="Toggle theme">
+          <i data-lucide="moon" aria-hidden="true"></i>
+        </button>
+        <button class="icon-button menu-toggle" type="button" aria-label="Open menu" title="Menu" aria-expanded="false">
+          <i data-lucide="menu" aria-hidden="true"></i>
+        </button>
+      </div>
+
+      <nav class="mobile-nav" aria-label="Mobile navigation" hidden>
+        <a href="#research" data-i18n="nav.research">Research</a>
+        <a href="#demos" data-i18n="nav.demos">Demos</a>
+        <a href="#publications" data-i18n="nav.publications">Publications</a>
+        <a href="#open-source" data-i18n="nav.openSource">Open source</a>
+        <a href="#journey" data-i18n="nav.journey">Journey</a>
+        <a href="#contact" data-i18n="nav.contact">Contact</a>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="hero" aria-labelledby="hero-title">
+        <video class="hero-video" autoplay muted loop playsinline poster="assets/versatilemotion-teaser.png">
+          <source src="assets/motionhub-text-motion.mp4" type="video/mp4" />
+        </video>
+        <div class="hero-scrim" aria-hidden="true"></div>
+
+        <div class="hero-inner section-shell">
+          <div class="hero-content">
+            <p class="hero-kicker reveal" data-i18n="hero.kicker">AI researcher · 3D human motion</p>
+            <h1 id="hero-title" class="reveal">Zeyu Ling</h1>
+            <div class="hero-identity reveal">
+              <img src="avatar/avatar.jpg" alt="Portrait of Zeyu Ling" />
+              <div>
+                <p data-i18n="hero.statement">I build generative models that understand, create, and precisely control how humans move.</p>
+                <span>凌泽宇 · Hangzhou, China</span>
+              </div>
+            </div>
+
+            <div class="hero-links reveal" aria-label="Profile links">
+              <a href="https://scholar.google.com/citations?hl=en&user=znEflnQAAAAJ" target="_blank" rel="noreferrer">
+                <i data-lucide="graduation-cap" aria-hidden="true"></i><span>Scholar</span>
+              </a>
+              <a href="https://github.com/ZeyuLing" target="_blank" rel="noreferrer">
+                <i data-lucide="github" aria-hidden="true"></i><span>GitHub</span>
+              </a>
+              <a href="https://huggingface.co/ZeyuLing" target="_blank" rel="noreferrer">
+                <span class="hf-icon" aria-hidden="true">HF</span><span>Hugging Face</span>
+              </a>
+              <a href="assets/zeyu-ling-cv.pdf" target="_blank">
+                <i data-lucide="file-text" aria-hidden="true"></i><span>CV</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="hero-status reveal">
+            <div>
+              <span data-i18n="hero.current">Currently</span>
+              <strong data-i18n="hero.role">Researcher at Tencent Hunyuan</strong>
+            </div>
+            <div>
+              <span data-i18n="hero.educationLabel">Education</span>
+              <strong data-i18n="hero.education">Ph.D. candidate at Zhejiang University</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-caption" aria-hidden="true">
+          <span class="live-dot"></span>
+          <span data-i18n="hero.caption">MotionHub · text to motion</span>
+        </div>
+      </section>
+
+      <section class="about section-shell" id="research" aria-labelledby="research-title">
+        <div class="section-label"><span>01</span><p data-i18n="research.eyebrow">Research direction</p></div>
+        <div class="about-main">
+          <h2 id="research-title" data-i18n="research.title">Making motion a first-class language for AI.</h2>
+          <p data-i18n="research.body">
+            My work connects structured motion representations, multimodal foundation models, and precise control. I am interested in general motion intelligence that can understand intent, reason over body structure, and produce animation-ready movement.
+          </p>
+          <div class="research-tags" aria-label="Research interests">
+            <span>3D Human Motion</span>
+            <span>Generative Models</span>
+            <span>Multimodal Learning</span>
+            <span>Video Generation</span>
+          </div>
+        </div>
+        <aside class="news" aria-labelledby="news-title">
+          <h3 id="news-title" data-i18n="news.title">Recent</h3>
+          <ol>
+            <li><time>2026.03</time><span data-i18n="news.prism">Released PRISM for streaming and controllable motion generation.</span></li>
+            <li><time>2026</time><span data-i18n="news.versatile">VersatileMotion accepted to ECCV 2026.</span></li>
+            <li><time>2025.10</time><span data-i18n="news.synclip">Released the SyncLipMAE arXiv preprint.</span></li>
+          </ol>
+        </aside>
+      </section>
+
+      <section class="selected-work section-shell" aria-labelledby="selected-title">
+        <div class="section-head">
+          <div class="section-label"><span>02</span><p data-i18n="selected.eyebrow">Selected work</p></div>
+          <div>
+            <h2 id="selected-title" data-i18n="selected.title">Recent research</h2>
+            <p data-i18n="selected.subtitle">Structured representations and unified systems for generating, understanding, and controlling human motion.</p>
+          </div>
+        </div>
+
+        <div class="work-grid">
+          <article class="work-card">
+            <a class="work-media" href="https://arxiv.org/abs/2603.08590" target="_blank" rel="noreferrer">
+              <img src="assets/prism-overview.png" alt="PRISM structured motion generation architecture" loading="lazy" />
+              <span class="media-badge">arXiv 2026</span>
+            </a>
+            <div class="work-body">
+              <div class="work-topline"><span data-i18n="common.firstAuthor">First author</span><span>Motion generation</span></div>
+              <h3>PRISM</h3>
+              <p class="work-lead" data-i18n="selected.prismLead">Streaming human motion generation with per-joint latent decomposition.</p>
+              <p data-i18n="selected.prismBody">A joint-factorized latent space and noise-free condition injection unify text-to-motion, pose conditioning, and stable long-horizon generation.</p>
+              <div class="resource-group" aria-label="PRISM resources">
+                <a href="https://arxiv.org/abs/2603.08590" target="_blank" rel="noreferrer"><i data-lucide="file-text"></i>Paper</a>
+                <a href="https://github.com/ZeyuLing/PRISM" target="_blank" rel="noreferrer"><i data-lucide="github"></i>Code</a>
+                <a href="#prism-demo"><i data-lucide="play"></i>Demo</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="work-card">
+            <a class="work-media" href="https://arxiv.org/abs/2411.17335" target="_blank" rel="noreferrer">
+              <img src="assets/versatilemotion-teaser.png" alt="VersatileMotion tasks across language, audio, and human motion" loading="lazy" />
+              <span class="media-badge media-badge-blue">ECCV 2026</span>
+            </a>
+            <div class="work-body">
+              <div class="work-topline"><span data-i18n="common.firstAuthor">First author</span><span>Motion language</span></div>
+              <h3>VersatileMotion</h3>
+              <p class="work-lead" data-i18n="selected.versatileLead">A unified framework for motion synthesis and comprehension.</p>
+              <p data-i18n="selected.versatileBody">Motion becomes a message that language models can read and write across single-person, multi-person, generation, and understanding tasks.</p>
+              <div class="resource-group" aria-label="VersatileMotion resources">
+                <a href="https://arxiv.org/abs/2411.17335" target="_blank" rel="noreferrer"><i data-lucide="file-text"></i>Paper</a>
+                <a href="https://github.com/ZeyuLing/versatilemotion" target="_blank" rel="noreferrer"><i data-lucide="github"></i>Code</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="demo-section" id="demos" aria-labelledby="demos-title">
+        <div class="section-shell">
+          <div class="section-head demo-head">
+            <div class="section-label"><span>03</span><p data-i18n="demos.eyebrow">Watch the research</p></div>
+            <div>
+              <h2 id="demos-title" data-i18n="demos.title">Research demos</h2>
+              <p data-i18n="demos.subtitle">A few methods are easier to understand in motion.</p>
+            </div>
+          </div>
+
+          <div class="demo-grid">
+            <article class="demo-card" id="prism-demo">
+              <div class="demo-media video-frame">
+                <button class="video-launch" type="button" data-video-id="3PBFpYcwGIM" aria-label="Play PRISM research demo">
+                  <img src="assets/prism-demo-poster.jpg" alt="PRISM research demo poster" />
+                  <span><i data-lucide="play" aria-hidden="true"></i></span>
+                </button>
+              </div>
+              <div class="demo-caption"><div><span>PRISM</span><h3 data-i18n="demos.prism">Streaming motion generation</h3></div><a href="https://www.youtube.com/watch?v=3PBFpYcwGIM" target="_blank" rel="noreferrer" aria-label="Open PRISM demo on YouTube"><i data-lucide="external-link"></i></a></div>
+            </article>
+
+            <article class="demo-card" id="synclip-demo">
+              <div class="demo-media">
+                <video controls muted loop playsinline preload="metadata" poster="assets/synclipmae-poster.jpg" src="assets/synclipmae-demo.mp4"></video>
+              </div>
+              <div class="demo-caption"><div><span>SyncLipMAE</span><h3 data-i18n="demos.synclip">Audio-visual representation learning</h3></div><a href="https://arxiv.org/abs/2510.10069" target="_blank" rel="noreferrer" aria-label="Open SyncLipMAE paper"><i data-lucide="external-link"></i></a></div>
+            </article>
+
+            <article class="demo-card" id="enchant-demo">
+              <div class="demo-media">
+                <video controls muted loop playsinline preload="metadata" poster="assets/enchantdance-poster.jpg" src="assets/enchantdance-demo.mp4"></video>
+              </div>
+              <div class="demo-caption"><div><span>EnchantDance</span><h3 data-i18n="demos.enchant">Music-driven dance generation</h3></div><a href="https://fluide1022.github.io/EnchantDance/" target="_blank" rel="noreferrer" aria-label="Open EnchantDance project page"><i data-lucide="external-link"></i></a></div>
+            </article>
+
+            <article class="demo-card" id="mcm-demo">
+              <div class="demo-media">
+                <video controls muted loop playsinline preload="metadata" poster="assets/mcm-poster.jpg" src="assets/mcm-demo.mp4"></video>
+              </div>
+              <div class="demo-caption"><div><span>MCM</span><h3 data-i18n="demos.mcm">Multi-condition motion synthesis</h3></div><a href="https://fluide1022.github.io/MCM/" target="_blank" rel="noreferrer" aria-label="Open MCM project page"><i data-lucide="external-link"></i></a></div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="publications section-shell" id="publications" aria-labelledby="publications-title">
+        <div class="section-head publications-head">
+          <div class="section-label"><span>04</span><p data-i18n="publications.eyebrow">Academic record</p></div>
+          <div>
+            <h2 id="publications-title" data-i18n="publications.title">Publications</h2>
+            <div class="filter-tabs" role="group" aria-label="Filter publications">
+              <button class="filter-button active" type="button" data-filter="all" data-i18n="publications.all">All</button>
+              <button class="filter-button" type="button" data-filter="motion" data-i18n="publications.motion">Motion</button>
+              <button class="filter-button" type="button" data-filter="multimodal" data-i18n="publications.multimodal">Multimodal</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="publication-list">
+          <article class="publication-row" data-category="motion">
+            <div class="pub-date"><span>2026</span><strong>arXiv</strong></div>
+            <div class="pub-main"><h3>PRISM: Streaming Human Motion Generation with Per-Joint Latent Decomposition</h3><p><strong>Zeyu Ling</strong>, Qing Shuai, Teng Zhang, Shiyang Li, Bo Han, Changqing Zou</p></div>
+            <div class="pub-resources">
+              <a href="https://arxiv.org/abs/2603.08590" target="_blank" rel="noreferrer"><i data-lucide="file-text"></i>Paper</a>
+              <a href="https://github.com/ZeyuLing/PRISM" target="_blank" rel="noreferrer"><i data-lucide="github"></i>Code</a>
+              <a href="#prism-demo"><i data-lucide="play"></i>Demo</a>
+            </div>
+          </article>
+
+          <article class="publication-row" data-category="motion">
+            <div class="pub-date"><span>2026</span><strong>ECCV</strong></div>
+            <div class="pub-main"><h3>VersatileMotion: A Unified Framework for Motion Synthesis and Comprehension</h3><p><strong>Zeyu Ling</strong>, Bo Han, Shiyang Li, Hongdeng Shen, Jikang Cheng, Changqing Zou</p></div>
+            <div class="pub-resources">
+              <a href="https://arxiv.org/abs/2411.17335" target="_blank" rel="noreferrer"><i data-lucide="file-text"></i>Paper</a>
+              <a href="https://github.com/ZeyuLing/versatilemotion" target="_blank" rel="noreferrer"><i data-lucide="github"></i>Code</a>
+            </div>
+          </article>
+
+          <article class="publication-row" data-category="multimodal">
+            <div class="pub-date"><span>2025</span><strong>arXiv</strong></div>
+            <div class="pub-main"><h3>SyncLipMAE: Contrastive Masked Pretraining for Audio-Visual Talking-Face Representation</h3><p><strong>Zeyu Ling</strong>, Xiaodong Gu, Jiangnan Tang, Changqing Zou</p></div>
+            <div class="pub-resources">
+              <a href="https://arxiv.org/abs/2510.10069" target="_blank" rel="noreferrer"><i data-lucide="file-text"></i>Paper</a>
+              <a href="https://github.com/ZeyuLing/SyncLipMAE" target="_blank" rel="noreferrer"><i data-lucide="github"></i>Code</a>
+              <a href="#synclip-demo"><i data-lucide="play"></i>Demo</a>
+            </div>
+          </article>
+
+          <article class="publication-row" data-category="motion">
+            <div class="pub-date"><span>2026</span><strong>TMM</strong></div>
+            <div class="pub-main"><h3>EnchantDance: Unveiling the Potential of Music-Driven Dance Movement</h3><p>Bo Han, Yuming Feng, <strong>Zeyu Ling</strong>, et al.</p></div>
+            <div class="pub-resources">
+              <a href="https://arxiv.org/abs/2312.15946" target="_blank" rel="noreferrer"><i data-lucide="file-text"></i>Paper</a>
+              <a href="https://github.com/fluide1022/EnchantDance" target="_blank" rel="noreferrer"><i data-lucide="github"></i>Code</a>
+              <a href="#enchant-demo"><i data-lucide="play"></i>Demo</a>
+            </div>
+          </article>
+
+          <article class="publication-row" data-category="multimodal">
+            <div class="pub-date"><span>2025</span><strong>ICME Oral</strong></div>
+            <div class="pub-main"><h3>EPIC: Efficient Prompt Interaction for Text-Image Classification</h3><p>Xinyao Yu, Hao Sun, <strong>Zeyu Ling</strong>, Ziwei Niu, Zhenjia Bai, Rui Qin, Yen-Wei Chen, Lanfen Lin</p></div>
+            <div class="pub-resources">
+              <a href="https://arxiv.org/abs/2507.07415" target="_blank" rel="noreferrer"><i data-lucide="file-text"></i>Paper</a>
+              <span class="resource-disabled" title="Official code is not publicly available"><i data-lucide="github"></i>Code unavailable</span>
+            </div>
+          </article>
+
+          <article class="publication-row" data-category="motion multimodal">
+            <div class="pub-date"><span>2024</span><strong>IJCAI</strong></div>
+            <div class="pub-main"><h3>MCM: Multi-condition Motion Synthesis Framework</h3><p><strong>Zeyu Ling</strong>, Bo Han, Yongkang Wong, Han Lin, Mohan Kankanhalli, Weidong Geng</p></div>
+            <div class="pub-resources">
+              <a href="https://arxiv.org/abs/2404.12886" target="_blank" rel="noreferrer"><i data-lucide="file-text"></i>Paper</a>
+              <a href="https://github.com/fluide1022/MCM" target="_blank" rel="noreferrer"><i data-lucide="github"></i>Code</a>
+              <a href="#mcm-demo"><i data-lucide="play"></i>Demo</a>
+            </div>
+          </article>
+        </div>
+
+        <a class="all-publications" href="https://scholar.google.com/citations?hl=en&user=znEflnQAAAAJ" target="_blank" rel="noreferrer">
+          <span data-i18n="publications.viewAll">Complete record on Google Scholar</span><i data-lucide="arrow-up-right" aria-hidden="true"></i>
+        </a>
+      </section>
+
+      <section class="open-source" id="open-source" aria-labelledby="open-source-title">
+        <div class="section-shell">
+          <div class="section-head open-source-head">
+            <div class="section-label"><span>05</span><p data-i18n="openSource.eyebrow">Build in public</p></div>
+            <div><h2 id="open-source-title" data-i18n="openSource.title">Open-source systems</h2><p data-i18n="openSource.body">Reusable infrastructure for motion research and large-scale model training.</p></div>
+          </div>
+
+          <div class="project-grid">
+            <article class="project-card project-motius">
+              <div class="project-visual project-logo">
+                <span class="motius-fallback" aria-hidden="true"><i data-lucide="waves"></i><strong>Motius</strong></span>
+                <img src="assets/motius-logo.png" alt="Motius logo" loading="eager" fetchpriority="high" />
+              </div>
+              <div class="project-body">
+                <div class="project-meta"><span>Motion framework</span><i data-lucide="box"></i></div>
+                <h3>Motius</h3>
+                <p data-i18n="openSource.motius">A modular framework for human-motion training, evaluation, inference, representation conversion, and reproducible leaderboards.</p>
+                <div class="project-chips"><span>Model Zoo</span><span>Evaluators</span><span>Motion Toolkit</span></div>
+                <a class="project-link" href="https://github.com/ZeyuLing/Motius/tree/main/motius" target="_blank" rel="noreferrer"><i data-lucide="github"></i><span>Source</span><i data-lucide="arrow-up-right"></i></a>
+              </div>
+            </article>
+
+            <article class="project-card project-hftrainer">
+              <div class="project-visual hftrainer-brand" aria-label="HFTrainer">
+                <i data-lucide="braces" aria-hidden="true"></i>
+                <strong>HFTrainer</strong>
+                <span>accelerate native</span>
+              </div>
+              <div class="project-body">
+                <div class="project-meta"><span>Training framework</span><i data-lucide="cpu"></i></div>
+                <h3>HFTrainer</h3>
+                <p data-i18n="openSource.hftrainer">Config-driven training for Hugging Face-native models with Accelerate, Transformers, Diffusers, and PEFT integration.</p>
+                <a class="project-link" href="https://github.com/ZeyuLing/HFTrainer" target="_blank" rel="noreferrer"><i data-lucide="github"></i><span>Source</span><i data-lucide="arrow-up-right"></i></a>
+              </div>
+            </article>
+
+            <article class="project-card project-motionhub">
+              <div class="project-visual motionhub-visual" aria-label="MotionHub dataset examples">
+                <img src="assets/motionhub-music-poster.jpg" alt="Music-driven dance example from MotionHub" loading="eager" />
+                <img src="assets/motionhub-two-poster.jpg" alt="Two-person interaction example from MotionHub" loading="eager" />
+              </div>
+              <div class="project-body">
+                <div class="project-meta"><span>Dataset · Toolkit</span><i data-lucide="database"></i></div>
+                <h3>MotionHub</h3>
+                <p data-i18n="openSource.motionHub">A curated human-motion collection spanning text, music, speech, and two-person interaction.</p>
+                <div class="project-stats"><span><strong>1.11M</strong> clips</span><span><strong>1,528</strong> hours</span><span><strong>20</strong> datasets</span></div>
+                <div class="project-links">
+                  <a class="project-link" href="https://github.com/ZeyuLing/MotionHub" target="_blank" rel="noreferrer"><i data-lucide="github"></i><span>Source</span></a>
+                  <a class="project-link" href="https://huggingface.co/datasets/ZeyuLing/MotionHub" target="_blank" rel="noreferrer"><span class="hf-icon">HF</span><span>Dataset</span><i data-lucide="arrow-up-right"></i></a>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="journey section-shell" id="journey" aria-labelledby="journey-title">
+        <div class="section-head journey-head">
+          <div class="section-label"><span>06</span><p data-i18n="journey.eyebrow">Experience & education</p></div>
+          <div><h2 id="journey-title" data-i18n="journey.title">Journey</h2></div>
+        </div>
+        <div class="timeline">
+          <article class="timeline-item current"><time>2025.12 — <span data-i18n="common.present">Present</span></time><div><h3 data-i18n="journey.tencentRole">Algorithm Researcher, Qingyun Program</h3><p data-i18n="journey.tencentOrg">Tencent · Hunyuan Lab · 3D Generation Center</p><span data-i18n="journey.tencentDesc">Leading HYMotion M2M for unified motion repair, in-betweening, and precise control.</span></div></article>
+          <article class="timeline-item"><time>2025.06 — 2025.12</time><div><h3 data-i18n="journey.bytedanceRole">Algorithm Research Intern</h3><p>ByteDance · V-AI</p><span data-i18n="journey.bytedanceDesc">Talking-face generation, lip sync, and multi-view texture generation.</span></div></article>
+          <article class="timeline-item"><time>2024.01 — 2024.12</time><div><h3 data-i18n="journey.zjlabRole">Algorithm Research Intern</h3><p data-i18n="journey.zjlabOrg">Zhejiang Lab</p><span data-i18n="journey.zjlabDesc">Led large-scale Text2Video model research with diffusion architectures.</span></div></article>
+          <article class="timeline-item"><time>2023.12 — <span data-i18n="common.present">Present</span></time><div><h3 data-i18n="journey.phd">Ph.D. in Computer Science</h3><p data-i18n="journey.zju">Zhejiang University · State Key Lab of CAD&amp;CG</p><span data-i18n="journey.phdDesc">Researching generative models for 3D human motion and multimodal intelligence.</span></div></article>
+          <article class="timeline-item compact"><time>2021.09 — 2023.12</time><div><h3 data-i18n="journey.master">M.Eng. in Software Engineering</h3><p data-i18n="journey.zjuSoftware">Zhejiang University</p></div></article>
+          <article class="timeline-item compact"><time>2017.09 — 2021.06</time><div><h3 data-i18n="journey.bachelor">B.Eng. in Software Engineering</h3><p data-i18n="journey.zjsu">Zhejiang Gongshang University</p></div></article>
+        </div>
+      </section>
+
+      <section class="contact" id="contact" aria-labelledby="contact-title">
+        <div class="contact-inner section-shell">
+          <img src="avatar/avatar.jpg" alt="Zeyu Ling" loading="lazy" />
+          <div class="contact-copy"><p class="eyebrow" data-i18n="contact.eyebrow">Let’s connect</p><h2 id="contact-title" data-i18n="contact.title">Research moves forward through good conversations.</h2><p data-i18n="contact.body">I am always glad to discuss human motion, multimodal generation, and open research collaboration.</p></div>
+          <a class="contact-email" href="mailto:zeyuling@zju.edu.cn"><i data-lucide="mail"></i><span>zeyuling@zju.edu.cn</span><i data-lucide="arrow-up-right"></i></a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer section-shell">
+      <p>© <span id="year"></span> Zeyu Ling</p>
+      <p data-i18n="footer.note">Research, code, and motion in one place.</p>
+      <a href="#top" aria-label="Back to top" title="Back to top"><i data-lucide="arrow-up" aria-hidden="true"></i></a>
+    </footer>
+  </body>
+</html>
