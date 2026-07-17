@@ -14,7 +14,7 @@ const translations = {
     "hero.caption": "Motion reel · music · interaction · multi-person",
     "about.eyebrow": "About",
     "about.title": "I work on 3D human motion generation.",
-    "about.body": "My research focuses on multimodal and controllable motion generation, including text- and audio-conditioned synthesis, long-sequence generation, motion understanding, and reusable motion representations.",
+    "about.body": "My research focuses on 3D human motion generation and multimodal generative models, including motion-language learning, human motion understanding, and text- or audio-conditioned synthesis for single-person and multi-person scenarios.",
     "about.educationTitle": "Education",
     "about.phd": "Ph.D. Candidate in Computer Science",
     "about.zju": "Zhejiang University · State Key Lab of CAD&CG",
@@ -29,6 +29,10 @@ const translations = {
     "about.tencentFocus": "Working on 3D Motion Generation.",
     "about.intern": "Algorithm Research Intern",
     "about.zjlab": "Zhejiang Lab",
+    "research.motionGeneration": "3D Human Motion Generation",
+    "research.motionLanguage": "Motion-Language Learning",
+    "research.multimodalModels": "Multimodal Generative Models",
+    "research.motionUnderstanding": "Human Motion Understanding",
     "common.present": "Present",
     "common.firstAuthor": "First author",
     "common.coAuthor": "Co-author",
@@ -81,7 +85,7 @@ const translations = {
     "hero.caption": "动作合集 · 音乐 · 交互 · 多人",
     "about.eyebrow": "关于",
     "about.title": "我的研究方向是 3D 人体动作生成。",
-    "about.body": "主要研究多模态、可控动作生成，包括文本与音频驱动的动作合成、长序列生成、动作理解，以及可复用的动作表征。",
+    "about.body": "主要研究 3D 人体动作生成与多模态生成模型，包括动作语言学习、人体动作理解，以及面向单人和多人场景的文本或音频驱动动作合成。",
     "about.educationTitle": "教育经历",
     "about.phd": "计算机科学与技术博士生",
     "about.zju": "浙江大学 · CAD&CG 国家重点实验室",
@@ -96,6 +100,10 @@ const translations = {
     "about.tencentFocus": "从事 3D 动作生成研究。",
     "about.intern": "算法研究实习生",
     "about.zjlab": "之江实验室",
+    "research.motionGeneration": "3D 人体动作生成",
+    "research.motionLanguage": "动作语言学习",
+    "research.multimodalModels": "多模态生成模型",
+    "research.motionUnderstanding": "人体动作理解",
     "common.present": "至今",
     "common.firstAuthor": "第一作者",
     "common.coAuthor": "共同作者",
@@ -210,6 +218,24 @@ document.querySelectorAll(".paper-media").forEach((media) => {
   const tabs = [...media.querySelectorAll("[data-media-target]")];
   const panels = [...media.querySelectorAll("[data-media-panel]")];
 
+  function loadVideo(panel) {
+    const video = panel.querySelector("video[data-src]");
+    if (!video) return;
+
+    panel.classList.add("is-loading");
+    panel.setAttribute("aria-busy", "true");
+    video.src = video.dataset.src;
+    video.removeAttribute("data-src");
+
+    const finishLoading = () => {
+      panel.classList.remove("is-loading");
+      panel.removeAttribute("aria-busy");
+    };
+    video.addEventListener("canplay", finishLoading, { once: true });
+    video.addEventListener("error", finishLoading, { once: true });
+    video.load();
+  }
+
   tabs.forEach((tab) => {
     tab.addEventListener("click", () => {
       const target = tab.dataset.mediaTarget;
@@ -222,6 +248,7 @@ document.querySelectorAll(".paper-media").forEach((media) => {
         const selected = panel.dataset.mediaPanel === target;
         panel.hidden = !selected;
         panel.classList.toggle("active", selected);
+        if (selected && target === "demo") loadVideo(panel);
         if (!selected) panel.querySelectorAll("video").forEach((video) => video.pause());
       });
     });
