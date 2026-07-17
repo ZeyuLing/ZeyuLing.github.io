@@ -5,17 +5,15 @@ A bilingual, responsive research homepage for Zeyu Ling, focused on 3D human mot
 ## Preview locally
 
 ```bash
-python3 -m http.server 4173
+npx http-server . -p 4173 -a 0.0.0.0 -c-1
 ```
-
-Open `http://localhost:4173`.
 
 ## Content map
 
 - `index.html` — page content and metadata
 - `styles.css` — visual system and responsive layout
-- `script.js` — language/theme toggles, mobile navigation, and publication filters
-- `assets/` — public research visuals, MotionHub previews, and downloadable CV
+- `script.js` — language/theme toggles, mobile navigation, publication filters, and figure/demo tabs
+- `assets/` — public research figures, demo reels, and MotionHub previews
 - `avatar/avatar.jpg` — portrait used in the hero and contact section
 
 The site has no build step. Update text directly in `index.html`; bilingual UI copy lives in `script.js`.

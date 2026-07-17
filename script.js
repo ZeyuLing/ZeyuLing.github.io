@@ -1,145 +1,137 @@
 const translations = {
   en: {
-    "nav.research": "Research",
-    "nav.demos": "Demos",
+    "nav.about": "About",
     "nav.publications": "Publications",
     "nav.openSource": "Open source",
-    "nav.journey": "Journey",
     "nav.contact": "Contact",
-    "hero.kicker": "AI researcher · 3D human motion",
-    "hero.statement": "I build generative models that understand, create, and precisely control how humans move.",
-    "hero.current": "Currently",
-    "hero.role": "Researcher at Tencent Hunyuan",
+    "hero.kicker": "AI researcher · 3D motion generation",
+    "hero.statement": "Researcher in 3D human motion generation and multimodal generative models.",
+    "hero.current": "Current position",
+    "hero.role": "Researcher, Tencent Hunyuan3D Team",
+    "hero.workFocus": "3D Motion Generation",
     "hero.educationLabel": "Education",
-    "hero.education": "Ph.D. candidate at Zhejiang University",
-    "hero.caption": "MotionHub · text to motion",
-    "research.eyebrow": "Research direction",
-    "research.title": "Making motion a first-class language for AI.",
-    "research.body": "My work connects structured motion representations, multimodal foundation models, and precise control. I am interested in general motion intelligence that can understand intent, reason over body structure, and produce animation-ready movement.",
-    "news.title": "Recent",
-    "news.prism": "Released PRISM for streaming and controllable motion generation.",
-    "news.versatile": "VersatileMotion accepted to ECCV 2026.",
-    "news.synclip": "Released the SyncLipMAE arXiv preprint.",
-    "selected.eyebrow": "Selected work",
-    "selected.title": "Recent research",
-    "selected.subtitle": "Structured representations and unified systems for generating, understanding, and controlling human motion.",
-    "selected.prismLead": "Streaming human motion generation with per-joint latent decomposition.",
-    "selected.prismBody": "A joint-factorized latent space and noise-free condition injection unify text-to-motion, pose conditioning, and stable long-horizon generation.",
-    "selected.versatileLead": "A unified framework for motion synthesis and comprehension.",
-    "selected.versatileBody": "Motion becomes a message that language models can read and write across single-person, multi-person, generation, and understanding tasks.",
-    "common.firstAuthor": "First author",
+    "hero.education": "Ph.D. candidate, Zhejiang University",
+    "hero.caption": "Motion reel · music · interaction · multi-person",
+    "about.eyebrow": "About",
+    "about.title": "I work on 3D human motion generation.",
+    "about.body": "My research focuses on multimodal and controllable motion generation, including text- and audio-conditioned synthesis, long-sequence generation, motion understanding, and reusable motion representations.",
+    "about.educationTitle": "Education",
+    "about.phd": "Ph.D. Candidate in Computer Science",
+    "about.zju": "Zhejiang University · State Key Lab of CAD&CG",
+    "about.advisors": "Advised by Prof. Changqing Zou and Prof. Weidong Geng",
+    "about.master": "M.Eng. in Software Engineering",
+    "about.zjuShort": "Zhejiang University",
+    "about.bachelor": "B.Eng. in Software Engineering",
+    "about.zjsu": "Zhejiang Gongshang University",
+    "about.experienceTitle": "Experience",
+    "about.tencentRole": "Algorithm Researcher",
+    "about.tencentOrg": "Tencent · Hunyuan3D Team",
+    "about.tencentFocus": "Working on 3D Motion Generation.",
+    "about.intern": "Algorithm Research Intern",
+    "about.zjlab": "Zhejiang Lab",
     "common.present": "Present",
-    "demos.eyebrow": "Watch the research",
-    "demos.title": "Research demos",
-    "demos.subtitle": "A few methods are easier to understand in motion.",
-    "demos.prism": "Streaming motion generation",
-    "demos.synclip": "Audio-visual representation learning",
-    "demos.enchant": "Music-driven dance generation",
-    "demos.mcm": "Multi-condition motion synthesis",
-    "publications.eyebrow": "Academic record",
+    "common.firstAuthor": "First author",
+    "common.coAuthor": "Co-author",
+    "common.figure": "Figure",
+    "common.demo": "Demo",
+    "common.noDemo": "No public demo",
+    "common.codeUnavailable": "Code unavailable",
+    "news.title": "Recent news",
+    "news.prism": "PRISM preprint and code were released.",
+    "news.versatile": "VersatileMotion was accepted to ECCV 2026.",
+    "news.enchant": "EnchantDance was accepted by IEEE TMM.",
+    "news.synclip": "SyncLipMAE was released as an arXiv preprint.",
+    "news.epic": "EPIC was accepted to ICME 2025 as an Oral paper.",
+    "news.mcm": "MCM was accepted to IJCAI 2024.",
+    "publications.eyebrow": "Research",
     "publications.title": "Publications",
     "publications.all": "All",
     "publications.motion": "Motion",
     "publications.multimodal": "Multimodal",
     "publications.viewAll": "Complete record on Google Scholar",
-    "openSource.eyebrow": "Build in public",
-    "openSource.title": "Open-source systems",
-    "openSource.body": "Reusable infrastructure for motion research and large-scale model training.",
-    "openSource.motius": "A modular framework for human-motion training, evaluation, inference, representation conversion, and reproducible leaderboards.",
-    "openSource.hftrainer": "Config-driven training for Hugging Face-native models with Accelerate, Transformers, Diffusers, and PEFT integration.",
+    "papers.prism": "A per-joint latent representation and condition injection scheme for text-to-motion, pose-conditioned generation, and stable sequential motion generation.",
+    "papers.versatile": "A motion-language framework that unifies synthesis and comprehension across single-person and multi-person tasks.",
+    "papers.synclip": "Contrastive masked pretraining for a shared talking-face representation across synchronization, facial understanding, visual speech recognition, and dubbing.",
+    "papers.enchant": "Music-driven 3D dance generation with a large dance dataset, a dance VAE, and a diffusion-based generation model.",
+    "papers.epic": "An efficient prompt-interaction strategy for text-image classification that tunes about one percent of the foundation model parameters.",
+    "papers.mcm": "A unified motion synthesis framework for combining text, music, and other control conditions through a shared control branch.",
+    "openSource.eyebrow": "Open source",
+    "openSource.title": "Research infrastructure",
+    "openSource.body": "Reusable tools for motion research and large-scale model training.",
+    "openSource.motius": "A modular framework for motion training, evaluation, inference, representation conversion, and reproducible leaderboards.",
+    "openSource.hftrainer": "Config-driven training for Hugging Face-native models with Accelerate, Transformers, Diffusers, and PEFT.",
     "openSource.motionHub": "A curated human-motion collection spanning text, music, speech, and two-person interaction.",
-    "journey.eyebrow": "Experience & education",
-    "journey.title": "Journey",
-    "journey.tencentRole": "Algorithm Researcher, Qingyun Program",
-    "journey.tencentOrg": "Tencent · Hunyuan Lab · 3D Generation Center",
-    "journey.tencentDesc": "Leading HYMotion M2M for unified motion repair, in-betweening, and precise control.",
-    "journey.bytedanceRole": "Algorithm Research Intern",
-    "journey.bytedanceDesc": "Talking-face generation, lip sync, and multi-view texture generation.",
-    "journey.zjlabRole": "Algorithm Research Intern",
-    "journey.zjlabOrg": "Zhejiang Lab",
-    "journey.zjlabDesc": "Led large-scale Text2Video model research with diffusion architectures.",
-    "journey.phd": "Ph.D. in Computer Science",
-    "journey.zju": "Zhejiang University · State Key Lab of CAD&CG",
-    "journey.phdDesc": "Researching generative models for 3D human motion and multimodal intelligence.",
-    "journey.master": "M.Eng. in Software Engineering",
-    "journey.zjuSoftware": "Zhejiang University",
-    "journey.bachelor": "B.Eng. in Software Engineering",
-    "journey.zjsu": "Zhejiang Gongshang University",
-    "contact.eyebrow": "Let’s connect",
-    "contact.title": "Research moves forward through good conversations.",
-    "contact.body": "I am always glad to discuss human motion, multimodal generation, and open research collaboration.",
-    "footer.note": "Research, code, and motion in one place."
+    "contact.eyebrow": "Contact",
+    "contact.title": "Let’s talk about motion research.",
+    "contact.body": "I am glad to discuss 3D motion generation, multimodal learning, and open research collaboration.",
+    "footer.note": "3D motion generation · multimodal learning"
   },
   zh: {
-    "nav.research": "研究",
-    "nav.demos": "演示",
+    "nav.about": "关于",
     "nav.publications": "论文",
     "nav.openSource": "开源",
-    "nav.journey": "经历",
     "nav.contact": "联系",
-    "hero.kicker": "AI 算法研究员 · 3D 人体动作",
-    "hero.statement": "我研究能够理解、生成并精准控制人体运动的生成模型。",
-    "hero.current": "目前",
-    "hero.role": "腾讯混元实验室算法研究员",
-    "hero.educationLabel": "教育经历",
+    "hero.kicker": "AI 算法研究员 · 3D 动作生成",
+    "hero.statement": "研究 3D 人体动作生成与多模态生成模型。",
+    "hero.current": "目前职位",
+    "hero.role": "腾讯 Hunyuan3D 团队算法研究员",
+    "hero.workFocus": "3D 动作生成",
+    "hero.educationLabel": "教育背景",
     "hero.education": "浙江大学计算机博士生",
-    "hero.caption": "MotionHub · 文本生成动作",
-    "research.eyebrow": "研究方向",
-    "research.title": "让动作成为 AI 的第一类语言。",
-    "research.body": "我的研究连接结构化动作表征、多模态基础模型与精准控制，关注能够理解意图、推理身体结构，并生成动画级运动的通用动作智能。",
-    "news.title": "近期动态",
-    "news.prism": "发布流式可控动作生成模型 PRISM。",
-    "news.versatile": "VersatileMotion 被 ECCV 2026 接收。",
-    "news.synclip": "发布 SyncLipMAE arXiv 预印本。",
-    "selected.eyebrow": "代表工作",
-    "selected.title": "近期研究",
-    "selected.subtitle": "面向人体动作生成、理解与控制的结构化表征和统一系统。",
-    "selected.prismLead": "基于逐关节隐空间分解的流式人体动作生成。",
-    "selected.prismBody": "逐关节隐空间与无噪声条件注入，让单一模型统一文本生成动作、姿态条件控制与稳定长序列生成。",
-    "selected.versatileLead": "统一动作生成与理解的基础模型框架。",
-    "selected.versatileBody": "将动作表示成语言模型可读写的 Motion Message，统一处理单人、多人、生成与理解任务。",
-    "common.firstAuthor": "第一作者",
+    "hero.caption": "动作合集 · 音乐 · 交互 · 多人",
+    "about.eyebrow": "关于",
+    "about.title": "我的研究方向是 3D 人体动作生成。",
+    "about.body": "主要研究多模态、可控动作生成，包括文本与音频驱动的动作合成、长序列生成、动作理解，以及可复用的动作表征。",
+    "about.educationTitle": "教育经历",
+    "about.phd": "计算机科学与技术博士生",
+    "about.zju": "浙江大学 · CAD&CG 国家重点实验室",
+    "about.advisors": "博士期间受邹长青教授、耿卫东教授指导",
+    "about.master": "软件工程硕士",
+    "about.zjuShort": "浙江大学",
+    "about.bachelor": "软件工程学士",
+    "about.zjsu": "浙江工商大学",
+    "about.experienceTitle": "工作经历",
+    "about.tencentRole": "算法研究员",
+    "about.tencentOrg": "腾讯 · Hunyuan3D 团队",
+    "about.tencentFocus": "从事 3D 动作生成研究。",
+    "about.intern": "算法研究实习生",
+    "about.zjlab": "之江实验室",
     "common.present": "至今",
-    "demos.eyebrow": "动态展示",
-    "demos.title": "研究演示",
-    "demos.subtitle": "有些方法，动起来才更容易理解。",
-    "demos.prism": "流式人体动作生成",
-    "demos.synclip": "音视频表征学习",
-    "demos.enchant": "音乐驱动舞蹈生成",
-    "demos.mcm": "多条件动作合成",
-    "publications.eyebrow": "学术档案",
+    "common.firstAuthor": "第一作者",
+    "common.coAuthor": "共同作者",
+    "common.figure": "方法图",
+    "common.demo": "演示",
+    "common.noDemo": "暂无公开视频",
+    "common.codeUnavailable": "代码暂未公开",
+    "news.title": "近期动态",
+    "news.prism": "发布 PRISM 预印本及代码。",
+    "news.versatile": "VersatileMotion 被 ECCV 2026 接收。",
+    "news.enchant": "EnchantDance 被 IEEE TMM 接收。",
+    "news.synclip": "发布 SyncLipMAE arXiv 预印本。",
+    "news.epic": "EPIC 被 ICME 2025 接收为 Oral 论文。",
+    "news.mcm": "MCM 被 IJCAI 2024 接收。",
+    "publications.eyebrow": "研究",
     "publications.title": "论文",
     "publications.all": "全部",
     "publications.motion": "动作",
     "publications.multimodal": "多模态",
-    "publications.viewAll": "在 Google Scholar 查看完整记录",
-    "openSource.eyebrow": "开放研究",
-    "openSource.title": "开源系统",
-    "openSource.body": "面向动作研究和大模型训练的可复用基础设施。",
-    "openSource.motius": "模块化人体动作训练、评测与推理框架，覆盖动作表征转换、模型库和可复现排行榜。",
-    "openSource.hftrainer": "基于 Accelerate 的配置驱动训练框架，原生集成 Transformers、Diffusers 与 PEFT。",
-    "openSource.motionHub": "覆盖文本、音乐、语音和双人交互的高质量统一人体动作数据集。",
-    "journey.eyebrow": "工作与教育经历",
-    "journey.title": "经历",
-    "journey.tencentRole": "算法研究员 · 青云计划",
-    "journey.tencentOrg": "腾讯 · 混元实验室 · 3D 生成中心",
-    "journey.tencentDesc": "主导 HYMotion M2M，统一动作修复、补间与精准控制。",
-    "journey.bytedanceRole": "算法研究员实习生",
-    "journey.bytedanceDesc": "研究 Talking Face 生成、Lip Sync 与 3D 多视角贴图生成。",
-    "journey.zjlabRole": "算法研究员实习生",
-    "journey.zjlabOrg": "之江实验室",
-    "journey.zjlabDesc": "主导基于扩散架构的大型 Text2Video 模型研究。",
-    "journey.phd": "计算机科学与技术博士",
-    "journey.zju": "浙江大学 · CAD&CG 国家重点实验室",
-    "journey.phdDesc": "研究 3D 人体动作生成与多模态智能。",
-    "journey.master": "软件工程硕士",
-    "journey.zjuSoftware": "浙江大学",
-    "journey.bachelor": "软件工程学士",
-    "journey.zjsu": "浙江工商大学",
-    "contact.eyebrow": "保持联系",
-    "contact.title": "好的交流，会让研究继续向前。",
-    "contact.body": "欢迎交流人体动作、多模态生成，以及开放研究合作。",
-    "footer.note": "在一个页面里放下研究、代码与运动。"
+    "publications.viewAll": "在 Google Scholar 查看完整论文记录",
+    "papers.prism": "通过逐关节隐空间表征与条件注入，统一文本生成动作、姿态条件生成和稳定的序列动作生成。",
+    "papers.versatile": "统一动作生成与理解的动作语言框架，覆盖单人和多人任务。",
+    "papers.synclip": "面向唇音同步、人脸理解、视觉语音识别和配音任务的对比式掩码音视频预训练方法。",
+    "papers.enchant": "结合大规模舞蹈数据集、Dance VAE 与扩散生成模型的音乐驱动 3D 舞蹈生成方法。",
+    "papers.epic": "高效的文本与图像提示交互方法，仅需微调约百分之一的基础模型参数。",
+    "papers.mcm": "通过共享控制分支统一组合文本、音乐等多种条件的动作合成框架。",
+    "openSource.eyebrow": "开源",
+    "openSource.title": "研究基础设施",
+    "openSource.body": "面向动作研究与大规模模型训练的可复用工具。",
+    "openSource.motius": "模块化动作训练、评测与推理框架，覆盖表征转换、模型库和可复现排行榜。",
+    "openSource.hftrainer": "面向 Hugging Face 模型的配置驱动训练框架，集成 Accelerate、Transformers、Diffusers 与 PEFT。",
+    "openSource.motionHub": "覆盖文本、音乐、语音和双人交互的统一人体动作数据集。",
+    "contact.eyebrow": "联系",
+    "contact.title": "欢迎交流动作生成研究。",
+    "contact.body": "欢迎讨论 3D 动作生成、多模态学习与开放研究合作。",
+    "footer.note": "3D 动作生成 · 多模态学习"
   }
 };
 
@@ -174,7 +166,7 @@ function setTheme(theme) {
   root.dataset.theme = theme;
   themeButton.innerHTML = `<i data-lucide="${theme === "dark" ? "sun" : "moon"}" aria-hidden="true"></i>`;
   themeButton.setAttribute("aria-label", theme === "dark" ? "Use light theme" : "Use dark theme");
-  document.querySelector('meta[name="theme-color"]').setAttribute("content", theme === "dark" ? "#111411" : "#f5f5f0");
+  document.querySelector('meta[name="theme-color"]').setAttribute("content", theme === "dark" ? "#101310" : "#f4f4ef");
   localStorage.setItem("theme", theme);
   updateIcons();
 }
@@ -208,8 +200,30 @@ document.querySelectorAll(".filter-button").forEach((button) => {
     document.querySelectorAll(".filter-button").forEach((item) => item.classList.remove("active"));
     button.classList.add("active");
     const filter = button.dataset.filter;
-    document.querySelectorAll(".publication-row").forEach((row) => {
-      row.hidden = filter !== "all" && !row.dataset.category.split(" ").includes(filter);
+    document.querySelectorAll(".paper-item").forEach((paper) => {
+      paper.hidden = filter !== "all" && !paper.dataset.category.split(" ").includes(filter);
+    });
+  });
+});
+
+document.querySelectorAll(".paper-media").forEach((media) => {
+  const tabs = [...media.querySelectorAll("[data-media-target]")];
+  const panels = [...media.querySelectorAll("[data-media-panel]")];
+
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      const target = tab.dataset.mediaTarget;
+      tabs.forEach((item) => {
+        const selected = item === tab;
+        item.classList.toggle("active", selected);
+        item.setAttribute("aria-selected", String(selected));
+      });
+      panels.forEach((panel) => {
+        const selected = panel.dataset.mediaPanel === target;
+        panel.hidden = !selected;
+        panel.classList.toggle("active", selected);
+        if (!selected) panel.querySelectorAll("video").forEach((video) => video.pause());
+      });
     });
   });
 });
@@ -225,9 +239,13 @@ document.querySelectorAll(".video-launch").forEach((button) => {
   });
 });
 
-window.addEventListener("scroll", () => header.classList.toggle("scrolled", window.scrollY > 24), { passive: true });
+function syncHeader() {
+  header.classList.toggle("scrolled", window.scrollY > 24);
+}
+
+window.addEventListener("scroll", syncHeader, { passive: true });
 window.addEventListener("resize", () => {
-  if (window.innerWidth > 1040 && !mobileNav.hidden) closeMenu();
+  if (window.innerWidth > 1080 && !mobileNav.hidden) closeMenu();
 });
 
 document.getElementById("year").textContent = new Date().getFullYear();
@@ -235,4 +253,5 @@ document.getElementById("year").textContent = new Date().getFullYear();
 const preferredTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 setLanguage(language);
 setTheme(storedTheme === "dark" || storedTheme === "light" ? storedTheme : preferredTheme);
+syncHeader();
 updateIcons();
