@@ -888,6 +888,31 @@ html[data-theme="dark"] .media-stage {
 .venue-violet { background: var(--violet); }
 .venue-green { background: var(--green); }
 
+.paper-award {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 24px;
+  padding: 0 8px;
+  color: #725500;
+  background: #fff1b8;
+  border: 1px solid rgba(151, 119, 0, 0.3);
+  font-weight: 600;
+  text-transform: none;
+}
+
+.paper-award svg {
+  width: 13px;
+  height: 13px;
+  stroke-width: 1.9;
+}
+
+html[data-theme="dark"] .paper-award {
+  color: #fff0a8;
+  background: rgba(151, 119, 0, 0.28);
+  border-color: rgba(255, 224, 92, 0.4);
+}
+
 .paper-content h3 {
   margin: 20px 0 12px;
   max-width: 660px;
