@@ -757,6 +757,14 @@ iframe {
   border-top: 1px solid var(--line);
 }
 
+.media-stage-contain .media-panel {
+  background: #fff;
+}
+
+html[data-theme="dark"] .media-stage-contain .media-panel {
+  background: #f5f4ef;
+}
+
 html[data-theme="dark"] .media-stage {
   background: #0b0e0c;
 }
