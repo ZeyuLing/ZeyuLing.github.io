@@ -999,8 +999,14 @@ html[data-theme="dark"] .paper-award {
 }
 
 .project-motionhub {
-  grid-column: 3 / span 9;
+  grid-column: span 7;
   grid-template-columns: minmax(0, 44%) minmax(0, 56%);
+}
+
+.project-research-skills {
+  grid-column: span 5;
+  grid-template-columns: 1fr;
+  grid-template-rows: 190px minmax(0, 1fr);
 }
 
 .project-visual {
@@ -1092,6 +1098,46 @@ html[data-theme="dark"] .paper-award {
   border-left: 1px solid rgba(255, 255, 255, 0.2);
 }
 
+.research-skills-visual {
+  position: relative;
+  min-height: 0;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 50% 32%, rgba(92, 116, 236, 0.17), transparent 42%),
+    #09111f;
+  border-right: 0;
+  border-bottom: 1px solid rgba(243, 242, 236, 0.14);
+}
+
+.research-skills-visual img {
+  width: 118px;
+  height: 118px;
+  object-fit: contain;
+}
+
+.research-lifecycle {
+  position: absolute;
+  right: 17px;
+  bottom: 13px;
+  left: 17px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+  color: rgba(243, 242, 236, 0.66);
+  font-family: "DM Mono", monospace;
+  font-size: 7px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.research-lifecycle svg {
+  width: 10px;
+  height: 10px;
+  color: #5bbdb7;
+}
+
 .project-body {
   min-width: 0;
   padding: 25px 26px 27px;
@@ -1119,6 +1165,10 @@ html[data-theme="dark"] .paper-award {
   font-size: 32px;
   font-weight: 500;
   line-height: 1;
+}
+
+.project-research-skills .project-body h3 {
+  font-size: 29px;
 }
 
 .project-body > p {
@@ -1362,6 +1412,10 @@ html[data-theme="dark"] .paper-award {
   }
 
   .project-hftrainer {
+    grid-column: span 5;
+  }
+
+  .project-research-skills {
     grid-column: span 5;
   }
 
@@ -1618,14 +1672,16 @@ html[data-theme="dark"] .paper-award {
   .project-card,
   .project-motius,
   .project-hftrainer,
-  .project-motionhub {
+  .project-motionhub,
+  .project-research-skills {
     display: block;
     margin-top: 15px;
   }
 
   .project-visual,
   .motionhub-visual,
-  .hftrainer-brand {
+  .hftrainer-brand,
+  .research-skills-visual {
     min-height: 190px;
     height: 190px;
     border-right: 0;
