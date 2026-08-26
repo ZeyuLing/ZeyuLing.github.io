@@ -11,7 +11,9 @@ const translations = {
     "hero.workFocus": "3D Motion Generation",
     "hero.educationLabel": "Education",
     "hero.education": "Ph.D. candidate, Zhejiang University",
-    "hero.caption": "Motion reel · music · interaction · multi-person",
+    "hero.caption": "Research reel",
+    "hero.pauseReel": "Pause research reel",
+    "hero.playReel": "Play research reel",
     "about.eyebrow": "About",
     "about.title": "I work on 3D human motion generation.",
     "about.body": "My research focuses on 3D human motion generation and multimodal generative models, including motion-language learning, human motion understanding, and text- or audio-conditioned synthesis for single-person and multi-person scenarios.",
@@ -87,7 +89,9 @@ const translations = {
     "hero.workFocus": "3D 动作生成",
     "hero.educationLabel": "教育背景",
     "hero.education": "浙江大学计算机博士生",
-    "hero.caption": "动作合集 · 音乐 · 交互 · 多人",
+    "hero.caption": "研究工作合集",
+    "hero.pauseReel": "暂停研究视频合集",
+    "hero.playReel": "播放研究视频合集",
     "about.eyebrow": "关于",
     "about.title": "我的研究方向是 3D 人体动作生成。",
     "about.body": "主要研究 3D 人体动作生成与多模态生成模型，包括动作语言学习、人体动作理解，以及面向单人和多人场景的文本或音频驱动动作合成。",
@@ -159,6 +163,27 @@ const languageButton = document.querySelector(".language-toggle");
 const themeButton = document.querySelector(".theme-toggle");
 const menuButton = document.querySelector(".menu-toggle");
 const mobileNav = document.querySelector(".mobile-nav");
+const hero = document.querySelector(".hero");
+const heroVideo = document.querySelector("#hero-reel");
+const heroReelToggle = document.querySelector(".hero-reel-toggle");
+const heroReelTitle = document.querySelector("[data-hero-reel-title]");
+const heroReelIndex = document.querySelector("[data-hero-reel-index]");
+const reduceMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+const mobileHeroQuery = window.matchMedia("(max-width: 760px)");
+
+const heroReelSegments = [
+  { start: 0, title: "GenTrack" },
+  { start: 4, title: "PRISM" },
+  { start: 7.8, title: "VersatileMotion" },
+  { start: 11.6, title: "SyncLipMAE" },
+  { start: 15.4, title: "EnchantDance" },
+  { start: 19.2, title: "MCM" }
+];
+
+let heroReelInView = true;
+let heroReelPausedByUser = false;
+let heroReelLoaded = false;
+let heroReelUnavailable = false;
 
 const storedLanguage = localStorage.getItem("language");
 const storedTheme = localStorage.getItem("theme");
@@ -166,6 +191,181 @@ let language = storedLanguage === "zh" ? "zh" : "en";
 
 function updateIcons() {
   if (window.lucide) window.lucide.createIcons();
+}
+
+function syncHeroReelControl() {
+  if (!hero || !heroVideo || !heroReelToggle) return;
+
+  const isPlaying = !heroVideo.paused && !heroVideo.ended;
+  const labelKey = isPlaying ? "hero.pauseReel" : "hero.playReel";
+  const label = translations[language][labelKey];
+
+  heroReelToggle.innerHTML = `<i data-lucide="${isPlaying ? "pause" : "play"}" aria-hidden="true"></i>`;
+  heroReelToggle.setAttribute("aria-label", label);
+  heroReelToggle.setAttribute("title", label);
+  hero.classList.toggle("is-reel-paused", !isPlaying);
+  updateIcons();
+}
+
+function syncHeroReelLabel() {
+  if (!heroVideo || !heroReelTitle || !heroReelIndex) return;
+
+  const currentTime = Number.isFinite(heroVideo.currentTime) ? heroVideo.currentTime : 0;
+  let activeIndex = 0;
+  heroReelSegments.forEach((segment, index) => {
+    if (currentTime >= segment.start) activeIndex = index;
+  });
+
+  heroReelTitle.textContent = heroReelSegments[activeIndex].title;
+  heroReelIndex.textContent = `${String(activeIndex + 1).padStart(2, "0")} / ${String(heroReelSegments.length).padStart(2, "0")}`;
+}
+
+function markHeroReelStatic() {
+  if (!hero || !heroVideo || !heroReelToggle) return;
+
+  heroVideo.pause();
+  heroVideo.classList.remove("is-ready");
+  hero.classList.add("is-reel-static");
+  heroReelToggle.hidden = true;
+  syncHeroReelControl();
+}
+
+function getHeroReelSource() {
+  if (!heroVideo) return "";
+  return mobileHeroQuery.matches ? heroVideo.dataset.srcMobile : heroVideo.dataset.srcDesktop;
+}
+
+function loadHeroReel() {
+  if (!heroVideo || heroReelLoaded || heroReelUnavailable || reduceMotionQuery.matches || navigator.connection?.saveData) return;
+
+  heroVideo.muted = true;
+  heroVideo.preload = "auto";
+  heroVideo.src = getHeroReelSource();
+  heroVideo.load();
+  heroReelLoaded = true;
+}
+
+function switchHeroReelSource() {
+  if (!heroVideo || !heroReelLoaded || heroReelUnavailable || reduceMotionQuery.matches || navigator.connection?.saveData) return;
+
+  const nextSource = new URL(getHeroReelSource(), document.baseURI).href;
+  if (heroVideo.currentSrc === nextSource) return;
+
+  const resumeTime = Number.isFinite(heroVideo.currentTime) ? heroVideo.currentTime : 0;
+  const shouldResume = !heroVideo.paused && !heroReelPausedByUser && heroReelInView && !document.hidden;
+
+  heroVideo.pause();
+  heroVideo.classList.remove("is-ready");
+  heroVideo.addEventListener(
+    "loadedmetadata",
+    () => {
+      if (Number.isFinite(heroVideo.duration)) {
+        heroVideo.currentTime = Math.min(resumeTime, Math.max(0, heroVideo.duration - 0.05));
+      }
+      syncHeroReelLabel();
+      if (shouldResume) playHeroReel();
+    },
+    { once: true }
+  );
+  heroVideo.src = getHeroReelSource();
+  heroVideo.load();
+  syncHeroReelControl();
+}
+
+async function playHeroReel() {
+  if (!heroVideo || !heroReelInView || document.hidden || heroReelPausedByUser || heroReelUnavailable) return;
+
+  loadHeroReel();
+  if (!heroReelLoaded) return;
+
+  try {
+    await heroVideo.play();
+  } catch {
+    // Autoplay can be declined; the poster and explicit play control remain available.
+  }
+  syncHeroReelControl();
+}
+
+function initHeroReel() {
+  if (!hero || !heroVideo || !heroReelToggle) return;
+
+  const prefersStatic = () => reduceMotionQuery.matches || Boolean(navigator.connection?.saveData);
+
+  heroReelToggle.addEventListener("click", () => {
+    if (heroVideo.paused) {
+      heroReelPausedByUser = false;
+      playHeroReel();
+    } else {
+      heroReelPausedByUser = true;
+      heroVideo.pause();
+    }
+    syncHeroReelControl();
+  });
+
+  const showHeroReel = () => {
+    if (prefersStatic()) return;
+    heroVideo.classList.add("is-ready");
+    hero.classList.remove("is-reel-static");
+    heroReelToggle.hidden = false;
+    syncHeroReelControl();
+  };
+
+  heroVideo.addEventListener("loadeddata", showHeroReel);
+  heroVideo.addEventListener("playing", showHeroReel);
+  heroVideo.addEventListener("play", syncHeroReelControl);
+  heroVideo.addEventListener("pause", syncHeroReelControl);
+  heroVideo.addEventListener("timeupdate", syncHeroReelLabel);
+  heroVideo.addEventListener("seeked", syncHeroReelLabel);
+  heroVideo.addEventListener("error", () => {
+    heroReelUnavailable = true;
+    markHeroReelStatic();
+  });
+
+  const handleReducedMotionChange = () => {
+    if (prefersStatic()) {
+      markHeroReelStatic();
+      return;
+    }
+
+    hero.classList.remove("is-reel-static");
+    heroReelToggle.hidden = false;
+    playHeroReel();
+  };
+
+  if (reduceMotionQuery.addEventListener) {
+    reduceMotionQuery.addEventListener("change", handleReducedMotionChange);
+  } else {
+    reduceMotionQuery.addListener(handleReducedMotionChange);
+  }
+
+  if (mobileHeroQuery.addEventListener) {
+    mobileHeroQuery.addEventListener("change", switchHeroReelSource);
+  } else {
+    mobileHeroQuery.addListener(switchHeroReelSource);
+  }
+
+  if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        heroReelInView = entry.isIntersecting;
+        if (heroReelInView) playHeroReel();
+        else heroVideo.pause();
+      },
+      { threshold: 0.08 }
+    );
+    observer.observe(hero);
+  } else {
+    playHeroReel();
+  }
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) heroVideo.pause();
+    else playHeroReel();
+  });
+
+  syncHeroReelLabel();
+  if (prefersStatic()) markHeroReelStatic();
+  else playHeroReel();
 }
 
 function setLanguage(nextLanguage) {
@@ -178,6 +378,7 @@ function setLanguage(nextLanguage) {
   languageButton.querySelector("span").textContent = language === "en" ? "中" : "EN";
   languageButton.setAttribute("aria-label", language === "en" ? "Switch to Chinese" : "切换到英文");
   localStorage.setItem("language", language);
+  syncHeroReelControl();
 }
 
 function setTheme(theme) {
@@ -279,5 +480,6 @@ document.getElementById("year").textContent = new Date().getFullYear();
 const preferredTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 setLanguage(language);
 setTheme(storedTheme === "dark" || storedTheme === "light" ? storedTheme : preferredTheme);
+initHeroReel();
 syncHeader();
 updateIcons();

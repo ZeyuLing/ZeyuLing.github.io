@@ -14,18 +14,20 @@
       content="Research in 3D human motion generation, controllable generative models, and multimodal learning."
     />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="assets/hero-motion-reel-poster.jpg" />
+    <meta property="og:image" content="assets/hero-motion-reel-poster.jpg?v=20260826" />
     <title>Zeyu Ling | 3D Motion Researcher</title>
     <link rel="icon" href="avatar/avatar.jpg" />
+    <link rel="preload" as="image" href="assets/hero-motion-reel-poster.jpg?v=20260826" media="(min-width: 761px)" fetchpriority="high" />
+    <link rel="preload" as="image" href="assets/hero-motion-reel-poster-mobile.jpg?v=20260826" media="(max-width: 760px)" fetchpriority="high" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=20260826" />
     <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
-    <script src="script.js" defer></script>
+    <script src="script.js?v=20260826" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -65,9 +67,17 @@
 
     <main id="main">
       <section class="hero" aria-labelledby="hero-title">
-        <video class="hero-video" autoplay muted loop playsinline poster="assets/hero-motion-reel-poster.jpg">
-          <source src="assets/hero-motion-reel.mp4" type="video/mp4" />
-        </video>
+        <video
+          id="hero-reel"
+          class="hero-video"
+          muted
+          loop
+          playsinline
+          preload="none"
+          data-src-desktop="assets/hero-motion-reel.mp4?v=20260826"
+          data-src-mobile="assets/hero-motion-reel-mobile.mp4?v=20260826"
+          aria-hidden="true"
+        ></video>
         <div class="hero-scrim" aria-hidden="true"></div>
 
         <div class="hero-inner section-shell">
@@ -107,9 +117,22 @@
           </div>
         </div>
 
-        <div class="hero-caption" aria-hidden="true">
-          <span class="live-dot"></span>
-          <span data-i18n="hero.caption">Motion reel · music · interaction · multi-person</span>
+        <div class="hero-reel-ui">
+          <div class="hero-caption" aria-hidden="true">
+            <span class="live-dot"></span>
+            <span data-i18n="hero.caption">Research reel</span>
+            <strong data-hero-reel-title>GenTrack</strong>
+            <span data-hero-reel-index>01 / 06</span>
+          </div>
+          <button
+            class="icon-button hero-reel-toggle"
+            type="button"
+            aria-controls="hero-reel"
+            aria-label="Pause research reel"
+            title="Pause research reel"
+          >
+            <i data-lucide="pause" aria-hidden="true"></i>
+          </button>
         </div>
       </section>
 

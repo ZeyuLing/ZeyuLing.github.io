@@ -232,7 +232,7 @@ iframe {
   overflow: hidden;
   display: flex;
   align-items: flex-end;
-  background: #0c1110;
+  background: #0c1110 url("assets/hero-motion-reel-poster.jpg?v=20260826") center / cover no-repeat;
   color: #fff;
 }
 
@@ -243,6 +243,18 @@ iframe {
   height: 100%;
   object-fit: cover;
   object-position: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 240ms ease;
+  will-change: opacity;
+}
+
+.hero-video.is-ready {
+  opacity: 1;
+}
+
+.hero.is-reel-static .hero-video {
+  opacity: 0;
 }
 
 .hero-scrim {
@@ -398,14 +410,52 @@ iframe {
   text-transform: uppercase;
 }
 
-.hero-caption {
+.hero-reel-ui {
   position: absolute;
-  z-index: 2;
+  z-index: 3;
   top: calc(var(--header-height) + 26px);
   right: max(24px, calc((100% - 1320px) / 2));
   display: flex;
   align-items: center;
+  gap: 12px;
+}
+
+.hero-caption {
+  display: flex;
+  align-items: center;
   gap: 8px;
+}
+
+.hero-caption strong {
+  color: #fff;
+  font-weight: 500;
+}
+
+.hero-reel-toggle {
+  width: 40px;
+  height: 40px;
+  flex: 0 0 auto;
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.44);
+  background: rgba(5, 11, 10, 0.28);
+  backdrop-filter: blur(10px);
+}
+
+.hero-reel-toggle:hover,
+.hero-reel-toggle:focus-visible {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.82);
+  background: rgba(5, 11, 10, 0.48);
+}
+
+.hero-reel-toggle[hidden] {
+  display: none;
+}
+
+.hero.is-reel-paused .live-dot,
+.hero.is-reel-static .live-dot {
+  background: rgba(255, 255, 255, 0.48);
+  box-shadow: none;
 }
 
 .live-dot {
@@ -1463,10 +1513,11 @@ html[data-theme="dark"] .paper-award {
     height: 81svh;
     min-height: 630px;
     max-height: 730px;
+    background-image: url("assets/hero-motion-reel-poster-mobile.jpg?v=20260826");
   }
 
   .hero-video {
-    object-position: 56% center;
+    object-position: center;
   }
 
   .hero-scrim {
@@ -1521,12 +1572,25 @@ html[data-theme="dark"] .paper-award {
     font-size: 11px;
   }
 
-  .hero-caption {
+  .hero-reel-ui {
     top: calc(var(--header-height) + 18px);
     right: 16px;
-    max-width: 180px;
+    max-width: calc(100% - 32px);
+  }
+
+  .hero-caption {
+    max-width: 210px;
     text-align: right;
     justify-content: flex-end;
+  }
+
+  .hero-caption > [data-i18n="hero.caption"] {
+    display: none;
+  }
+
+  .hero-reel-toggle {
+    width: 40px;
+    height: 40px;
   }
 
   .section-head,
@@ -1772,5 +1836,11 @@ html[data-theme="dark"] .paper-award {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .hero-video,
+  .hero-reel-toggle,
+  .live-dot {
+    display: none;
   }
 }
