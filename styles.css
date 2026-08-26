@@ -232,7 +232,7 @@ iframe {
   overflow: hidden;
   display: flex;
   align-items: flex-end;
-  background: #0c1110 url("assets/hero-motion-reel-poster.jpg?v=20260826") center / cover no-repeat;
+  background: #0c1110 url("assets/hero-motion-reel-poster.jpg?v=20260827") center / cover no-repeat;
   color: #fff;
 }
 
@@ -1513,7 +1513,7 @@ html[data-theme="dark"] .paper-award {
     height: 81svh;
     min-height: 630px;
     max-height: 730px;
-    background-image: url("assets/hero-motion-reel-poster-mobile.jpg?v=20260826");
+    background-image: url("assets/hero-motion-reel-poster-mobile.jpg?v=20260827");
   }
 
   .hero-video {

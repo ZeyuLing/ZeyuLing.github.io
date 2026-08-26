@@ -11,7 +11,7 @@ const translations = {
     "hero.workFocus": "3D Motion Generation",
     "hero.educationLabel": "Education",
     "hero.education": "Ph.D. candidate, Zhejiang University",
-    "hero.caption": "Research reel",
+    "hero.caption": "Selected research demos",
     "hero.pauseReel": "Pause research reel",
     "hero.playReel": "Play research reel",
     "about.eyebrow": "About",
@@ -89,7 +89,7 @@ const translations = {
     "hero.workFocus": "3D 动作生成",
     "hero.educationLabel": "教育背景",
     "hero.education": "浙江大学计算机博士生",
-    "hero.caption": "研究工作合集",
+    "hero.caption": "精选研究演示",
     "hero.pauseReel": "暂停研究视频合集",
     "hero.playReel": "播放研究视频合集",
     "about.eyebrow": "关于",
@@ -175,9 +175,7 @@ const heroReelSegments = [
   { start: 0, title: "GenTrack" },
   { start: 4, title: "PRISM" },
   { start: 7.8, title: "VersatileMotion" },
-  { start: 11.6, title: "SyncLipMAE" },
-  { start: 15.4, title: "EnchantDance" },
-  { start: 19.2, title: "MCM" }
+  { start: 11.6, title: "SyncLipMAE" }
 ];
 
 let heroReelInView = true;
