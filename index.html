@@ -162,7 +162,7 @@
         </div>
         <ol class="news-grid">
           <li><time>2026.08</time><span data-i18n="news.gentrack">GenTrack was released as an arXiv preprint.</span></li>
-          <li><time>2026.03</time><span data-i18n="news.prism">PRISM preprint and code were released.</span></li>
+          <li><time>2026.08</time><span data-i18n="news.prism">PRISM was updated with a revised manuscript, expanded experiments, and a new video demo.</span></li>
           <li><time>2026</time><span data-i18n="news.versatile">VersatileMotion was accepted to ECCV 2026.</span></li>
           <li><time>2026</time><span data-i18n="news.enchant">EnchantDance received the ChinaMM 2026 Best Paper Award and was accepted by IEEE TMM.</span></li>
           <li><time>2025.10</time><span data-i18n="news.synclip">SyncLipMAE was released as an arXiv preprint.</span></li>
@@ -211,22 +211,17 @@
                 <button class="media-tab active" type="button" data-media-target="figure" aria-selected="true"><i data-lucide="image"></i><span data-i18n="common.figure">Figure</span></button>
                 <button class="media-tab" type="button" data-media-target="demo" aria-selected="false"><i data-lucide="play"></i><span data-i18n="common.demo">Demo</span></button>
               </div>
-              <div class="media-stage">
-                <div class="media-panel active" data-media-panel="figure"><img src="assets/prism-overview.webp" alt="Latest PRISM v10 method overview" decoding="async" /></div>
-                <div class="media-panel" data-media-panel="demo" hidden>
-                  <button class="video-launch" type="button" data-video-id="3PBFpYcwGIM" aria-label="Play PRISM research demo">
-                    <img src="assets/prism-demo-poster.jpg" alt="PRISM demo poster" loading="lazy" />
-                    <span><i data-lucide="play" aria-hidden="true"></i></span>
-                  </button>
-                </div>
+              <div class="media-stage media-stage-contain">
+                <div class="media-panel active" data-media-panel="figure"><img src="assets/prism-overview.webp" alt="PRISM structured kinematic-unit latent manifold and KU-FlowT framework overview" decoding="async" /></div>
+                <div class="media-panel" data-media-panel="demo" hidden><video controls playsinline preload="none" poster="assets/prism-demo-poster.jpg" data-src="assets/prism-demo.mp4" aria-label="PRISM research demo covering text-to-motion, pose-conditioned continuation, sequential generation, and narrative motion composition"></video></div>
               </div>
             </div>
             <div class="paper-content">
               <div class="paper-meta"><span class="venue venue-coral">arXiv 2026</span><span data-i18n="common.firstAuthor">First author</span></div>
-              <h3>PRISM: Streaming Human Motion Generation with Per-Joint Latent Decomposition</h3>
+              <h3>PRISM: Per-unit Kinematic Motion Generation in a Structured Latent Manifold</h3>
               <p class="paper-authors"><strong>Zeyu Ling</strong>, Qing Shuai, Teng Zhang, Shiyang Li, Bo Han, Changqing Zou</p>
-              <p class="paper-summary" data-i18n="papers.prism">A per-joint latent representation and condition injection scheme for text-to-motion, pose-conditioned generation, and stable sequential motion generation.</p>
-              <div class="paper-links"><a href="https://arxiv.org/abs/2603.08590" target="_blank" rel="noreferrer"><i data-lucide="file-text"></i>Paper</a><a href="https://github.com/ZeyuLing/PRISM" target="_blank" rel="noreferrer"><i data-lucide="github"></i>Code</a><a href="https://www.youtube.com/watch?v=3PBFpYcwGIM" target="_blank" rel="noreferrer"><i data-lucide="play"></i>Demo</a></div>
+              <p class="paper-summary" data-i18n="papers.prism">A continuous kinematic-unit latent manifold that preserves articulated structure and gives one SMPL-native flow model text-to-motion, pose-conditioned continuation, sequential rollout, and narrative motion composition capabilities.</p>
+              <div class="paper-links"><a href="https://arxiv.org/abs/2603.08590" target="_blank" rel="noreferrer"><i data-lucide="file-text"></i>Paper</a><a href="https://github.com/ZeyuLing/PRISM" target="_blank" rel="noreferrer"><i data-lucide="github"></i>Code</a><a href="assets/prism-demo.mp4" target="_blank" rel="noreferrer"><i data-lucide="play"></i>Demo</a></div>
             </div>
           </article>
 

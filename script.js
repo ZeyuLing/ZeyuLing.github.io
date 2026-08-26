@@ -43,7 +43,7 @@ const translations = {
     "common.codeUnavailable": "Code unavailable",
     "news.title": "Recent news",
     "news.gentrack": "GenTrack was released as an arXiv preprint.",
-    "news.prism": "PRISM preprint and code were released.",
+    "news.prism": "PRISM was updated with a revised manuscript, expanded experiments, and a new video demo.",
     "news.versatile": "VersatileMotion was accepted to ECCV 2026.",
     "news.enchant": "EnchantDance received the ChinaMM 2026 Best Paper Award and was accepted by IEEE TMM.",
     "news.synclip": "SyncLipMAE was released as an arXiv preprint.",
@@ -56,7 +56,7 @@ const translations = {
     "publications.multimodal": "Multimodal",
     "publications.viewAll": "Complete record on Google Scholar",
     "papers.gentrack": "An online generator–tracker framework that uses execution feedback to produce robot-native motions and broaden zero-shot humanoid tracking coverage.",
-    "papers.prism": "A per-joint latent representation and condition injection scheme for text-to-motion, pose-conditioned generation, and stable sequential motion generation.",
+    "papers.prism": "A continuous kinematic-unit latent manifold that preserves articulated structure and gives one SMPL-native flow model text-to-motion, pose-conditioned continuation, sequential rollout, and narrative motion composition capabilities.",
     "papers.versatile": "A motion-language framework that unifies synthesis and comprehension across single-person and multi-person tasks.",
     "papers.synclip": "Contrastive masked pretraining for a shared talking-face representation across synchronization, facial understanding, visual speech recognition, and dubbing.",
     "papers.enchant": "Music-driven 3D dance generation with a large dance dataset, a dance VAE, and a diffusion-based generation model.",
@@ -118,7 +118,7 @@ const translations = {
     "common.codeUnavailable": "代码暂未公开",
     "news.title": "近期动态",
     "news.gentrack": "发布 GenTrack arXiv 预印本。",
-    "news.prism": "发布 PRISM 预印本及代码。",
+    "news.prism": "PRISM 完成论文改写、实验扩充与新版视频演示更新。",
     "news.versatile": "VersatileMotion 被 ECCV 2026 接收。",
     "news.enchant": "EnchantDance 获 ChinaMM 2026 最佳论文奖，并被 IEEE TMM 接收。",
     "news.synclip": "发布 SyncLipMAE arXiv 预印本。",
@@ -131,7 +131,7 @@ const translations = {
     "publications.multimodal": "多模态",
     "publications.viewAll": "在 Google Scholar 查看完整论文记录",
     "papers.gentrack": "以在线生成器—跟踪器框架联结执行反馈、机器人原生动作生成与零样本人形机器人跟踪覆盖。",
-    "papers.prism": "通过逐关节隐空间表征与条件注入，统一文本生成动作、姿态条件生成和稳定的序列动作生成。",
+    "papers.prism": "以连续的运动学单元隐空间保留人体拓扑与关节结构，使同一个 SMPL 原生流模型同时具备文本生成动作、姿态条件续写、序列展开与叙事动作组合能力。",
     "papers.versatile": "统一动作生成与理解的动作语言框架，覆盖单人和多人任务。",
     "papers.synclip": "面向唇音同步、人脸理解、视觉语音识别和配音任务的对比式掩码音视频预训练方法。",
     "papers.enchant": "结合大规模舞蹈数据集、Dance VAE 与扩散生成模型的音乐驱动 3D 舞蹈生成方法。",
@@ -260,17 +260,6 @@ document.querySelectorAll(".paper-media").forEach((media) => {
         if (!selected) panel.querySelectorAll("video").forEach((video) => video.pause());
       });
     });
-  });
-});
-
-document.querySelectorAll(".video-launch").forEach((button) => {
-  button.addEventListener("click", () => {
-    const iframe = document.createElement("iframe");
-    iframe.src = `https://www.youtube-nocookie.com/embed/${button.dataset.videoId}?autoplay=1&rel=0`;
-    iframe.title = "PRISM research demo";
-    iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
-    iframe.allowFullscreen = true;
-    button.replaceWith(iframe);
   });
 });
 
