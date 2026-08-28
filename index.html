@@ -14,13 +14,51 @@
       content="Research in 3D human motion generation, controllable generative models, and multimodal learning."
     />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="assets/hero-motion-reel-poster.jpg?v=20260828" />
+    <meta property="og:image" content="assets/hero-clips/gentrack-01-poster.jpg?v=20260828f" />
     <title>Zeyu Ling | 3D Motion Researcher</title>
     <link rel="icon" href="avatar/avatar.jpg" />
     <script>
       (() => {
-        const variants = ["gentrack", "prism", "synclip"];
-        const stateKey = "zeyu.heroReelShuffle.v20260828";
+        const assetVersion = "20260828f";
+        const stateKey = `zeyu.heroMontage.${assetVersion}`;
+        const projects = [
+          {
+            id: "gentrack",
+            title: "GenTrack",
+            variants: [
+              { id: "gentrack-01", sourceIn: 0.8, sourceOut: 4.4 },
+              { id: "gentrack-02", sourceIn: 0.2, sourceOut: 3.8 },
+              { id: "gentrack-03", sourceIn: 0.2, sourceOut: 3.8 }
+            ]
+          },
+          {
+            id: "prism",
+            title: "PRISM",
+            variants: [
+              { id: "prism-01", sourceIn: 46.2, sourceOut: 50.0 },
+              { id: "prism-02", sourceIn: 98.0, sourceOut: 101.8 },
+              { id: "prism-03", sourceIn: 106.0, sourceOut: 109.8 }
+            ]
+          },
+          {
+            id: "versatilemotion",
+            title: "VersatileMotion",
+            variants: [
+              { id: "versatilemotion-01", sourceIn: 0.2, sourceOut: 3.8 },
+              { id: "versatilemotion-02", sourceIn: 4.2, sourceOut: 7.8 },
+              { id: "versatilemotion-03", sourceIn: 8.7, sourceOut: 12.3 }
+            ]
+          },
+          {
+            id: "synclipmae",
+            title: "SyncLipMAE",
+            variants: [
+              { id: "synclipmae-01", sourceIn: 23.2, sourceOut: 26.8 },
+              { id: "synclipmae-02", sourceIn: 47.2, sourceOut: 50.8 },
+              { id: "synclipmae-03", sourceIn: 74.2, sourceOut: 78.0 }
+            ]
+          }
+        ];
         const randomIndex = (limit) => {
           if (limit <= 1) return 0;
           try {
@@ -39,39 +77,85 @@
           }
           return result;
         };
-        const isValidState = (value) =>
-          value &&
-          Array.isArray(value.queue) &&
-          value.queue.length < variants.length &&
-          value.queue.every((id) => variants.includes(id)) &&
-          new Set(value.queue).size === value.queue.length &&
-          (!value.last || variants.includes(value.last)) &&
-          (!value.last || !value.queue.includes(value.last)) &&
-          (Boolean(value.last) || value.queue.length === 0);
+        const normalizeState = (value) => {
+          if (!value || typeof value !== "object") return { lastByProject: {}, order: [] };
 
-        let state = null;
+          const lastByProject = {};
+          projects.forEach((project) => {
+            const clipId = value.lastByProject?.[project.id];
+            if (project.variants.some((variant) => variant.id === clipId)) {
+              lastByProject[project.id] = clipId;
+            }
+          });
+
+          const projectIds = projects.map((project) => project.id);
+          const order =
+            Array.isArray(value.order) &&
+            value.order.length === projectIds.length &&
+            value.order.every((id) => projectIds.includes(id)) &&
+            new Set(value.order).size === projectIds.length
+              ? [...value.order]
+              : [];
+
+          return { lastByProject, order };
+        };
+        const createClip = (project, variant) => {
+          const base = `assets/hero-clips/${variant.id}`;
+          const query = `?v=${assetVersion}`;
+          return {
+            ...variant,
+            projectId: project.id,
+            title: project.title,
+            desktop: `${base}.mp4${query}`,
+            mobile: `${base}-mobile.mp4${query}`,
+            posterDesktop: `${base}-poster.jpg${query}`,
+            posterMobile: `${base}-poster-mobile.jpg${query}`
+          };
+        };
+
+        let storedState = null;
         try {
-          const storedState = window.sessionStorage.getItem(stateKey);
-          if (storedState) state = JSON.parse(storedState);
+          const rawState = window.sessionStorage.getItem(stateKey);
+          if (rawState) storedState = JSON.parse(rawState);
         } catch {
-          // history.state below keeps reload rotation available when storage is blocked.
+          // history.state below keeps adjacent reloads different when storage is blocked.
         }
-        if (!isValidState(state)) {
-          const historyState = window.history.state?.[stateKey];
-          state = isValidState(historyState) ? historyState : { queue: [], last: "" };
-        }
-
-        let queue = [...state.queue];
-        if (!queue.length) {
-          queue = shuffle(variants);
-          if (queue[0] === state.last && queue.length > 1) {
-            const swapIndex = 1 + randomIndex(queue.length - 1);
-            [queue[0], queue[swapIndex]] = [queue[swapIndex], queue[0]];
+        if (!storedState) {
+          try {
+            storedState = window.history.state?.[stateKey] || null;
+          } catch {
+            // A fresh random montage still works if history state is unavailable.
           }
         }
+        const previous = normalizeState(storedState);
 
-        const selected = queue.shift() || variants[0];
-        const nextState = { queue, last: selected };
+        const selectedByProject = projects.map((project) => {
+          const previousClipId = previous.lastByProject[project.id];
+          const candidates = project.variants.filter((variant) => variant.id !== previousClipId);
+          const variant = candidates[randomIndex(candidates.length)] || project.variants[0];
+          return createClip(project, variant);
+        });
+        const playlist = shuffle(selectedByProject);
+        const currentOrder = playlist.map((clip) => clip.projectId);
+        if (
+          playlist.length > 1 &&
+          previous.order.length === currentOrder.length &&
+          currentOrder.every((id, index) => id === previous.order[index])
+        ) {
+          const swapIndex = 1 + randomIndex(playlist.length - 1);
+          [playlist[0], playlist[swapIndex]] = [playlist[swapIndex], playlist[0]];
+        }
+
+        const orderSignature = playlist.map((clip) => clip.projectId).join("|");
+        const planId = playlist.map((clip) => clip.id).join("|");
+        const contentSignature = [...selectedByProject]
+          .sort((a, b) => a.projectId.localeCompare(b.projectId))
+          .map((clip) => `${clip.id}@${clip.sourceIn}-${clip.sourceOut}`)
+          .join("|");
+        const nextState = {
+          lastByProject: Object.fromEntries(selectedByProject.map((clip) => [clip.projectId, clip.id])),
+          order: playlist.map((clip) => clip.projectId)
+        };
         try {
           window.sessionStorage.setItem(stateKey, JSON.stringify(nextState));
         } catch {
@@ -81,31 +165,28 @@
           const currentHistoryState = window.history.state && typeof window.history.state === "object" ? window.history.state : {};
           window.history.replaceState({ ...currentHistoryState, [stateKey]: nextState }, "");
         } catch {
-          // Rotation remains random if both persistence mechanisms are unavailable.
+          // Selection remains random if both persistence mechanisms are unavailable.
         }
 
-        const posters = {
-          gentrack: {
-            desktop: "assets/hero-motion-reel-poster.jpg?v=20260828",
-            mobile: "assets/hero-motion-reel-poster-mobile.jpg?v=20260828"
-          },
-          prism: {
-            desktop: "assets/hero-motion-reel-poster-prism.jpg?v=20260828",
-            mobile: "assets/hero-motion-reel-poster-prism-mobile.jpg?v=20260828"
-          },
-          synclip: {
-            desktop: "assets/hero-motion-reel-poster-synclip.jpg?v=20260828",
-            mobile: "assets/hero-motion-reel-poster-synclip-mobile.jpg?v=20260828"
-          }
+        window.__heroMontage = {
+          version: assetVersion,
+          playlist,
+          planId,
+          contentSignature,
+          orderSignature
         };
-        const selectedPosters = posters[selected] || posters.gentrack;
-        document.documentElement.dataset.heroReelVariant = selected;
-        document.documentElement.style.setProperty("--hero-reel-poster-desktop", `url("${selectedPosters.desktop}")`);
-        document.documentElement.style.setProperty("--hero-reel-poster-mobile", `url("${selectedPosters.mobile}")`);
+        const firstClip = playlist[0];
+        const root = document.documentElement;
+        root.dataset.heroPlanId = planId;
+        root.dataset.heroContentSignature = contentSignature;
+        root.dataset.heroOrderSignature = orderSignature;
+        root.dataset.heroClipId = firstClip.id;
+        root.style.setProperty("--hero-reel-poster-desktop", `url("${firstClip.posterDesktop}")`);
+        root.style.setProperty("--hero-reel-poster-mobile", `url("${firstClip.posterMobile}")`);
 
         [
-          { href: selectedPosters.desktop, media: "(min-width: 761px)" },
-          { href: selectedPosters.mobile, media: "(max-width: 760px)" }
+          { href: firstClip.posterDesktop, media: "(min-width: 761px)" },
+          { href: firstClip.posterMobile, media: "(max-width: 760px)" }
         ].forEach(({ href, media }) => {
           const preload = document.createElement("link");
           preload.rel = "preload";
@@ -123,9 +204,10 @@
       href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=20260828" />
+    <link rel="stylesheet" href="styles.css?v=20260828f" />
     <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
-    <script src="script.js?v=20260828" defer></script>
+    <script src="hero-montage.js?v=20260828f" defer></script>
+    <script src="script.js?v=20260828f" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -165,17 +247,8 @@
 
     <main id="main">
       <section class="hero" aria-labelledby="hero-title">
-        <video
-          id="hero-reel"
-          class="hero-video"
-          muted
-          loop
-          playsinline
-          preload="none"
-          data-src-desktop="assets/hero-motion-reel.mp4?v=20260828"
-          data-src-mobile="assets/hero-motion-reel-mobile.mp4?v=20260828"
-          aria-hidden="true"
-        ></video>
+        <video id="hero-clip-a" class="hero-video" muted playsinline preload="none" data-hero-slot="a" aria-hidden="true"></video>
+        <video id="hero-clip-b" class="hero-video" muted playsinline preload="none" data-hero-slot="b" aria-hidden="true"></video>
         <div class="hero-scrim" aria-hidden="true"></div>
 
         <div class="hero-inner section-shell">
@@ -225,7 +298,7 @@
           <button
             class="icon-button hero-reel-toggle"
             type="button"
-            aria-controls="hero-reel"
+            aria-controls="hero-clip-a hero-clip-b"
             aria-label="Pause research reel"
             title="Pause research reel"
             hidden

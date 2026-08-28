@@ -14,8 +14,9 @@
   --green: #47834a;
   --header-height: 68px;
   --shell: min(1180px, calc(100% - 48px));
-  --hero-reel-poster-desktop: url("assets/hero-motion-reel-poster.jpg?v=20260828");
-  --hero-reel-poster-mobile: url("assets/hero-motion-reel-poster-mobile.jpg?v=20260828");
+  --hero-reel-poster-desktop: url("assets/hero-clips/gentrack-01-poster.jpg?v=20260828f");
+  --hero-reel-poster-mobile: url("assets/hero-clips/gentrack-01-poster-mobile.jpg?v=20260828f");
+  --hero-reel-crossfade: 560ms;
   color-scheme: light;
 }
 
@@ -241,18 +242,23 @@ iframe {
 .hero-video {
   position: absolute;
   inset: 0;
+  z-index: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
   pointer-events: none;
   opacity: 0;
-  transition: opacity 240ms ease;
+  transition: opacity var(--hero-reel-crossfade) linear;
   will-change: opacity;
 }
 
-.hero-video.is-ready {
+.hero-video.is-ready.is-active {
   opacity: 1;
+}
+
+.hero-video.is-transition-disabled {
+  transition: none;
 }
 
 .hero.is-reel-static .hero-video {
@@ -262,6 +268,7 @@ iframe {
 .hero-scrim {
   position: absolute;
   inset: 0;
+  z-index: 1;
   background: rgba(4, 9, 8, 0.54);
   box-shadow: inset 520px 0 210px rgba(2, 7, 6, 0.4), inset 0 -250px 190px rgba(2, 7, 6, 0.62);
 }
