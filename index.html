@@ -14,20 +14,118 @@
       content="Research in 3D human motion generation, controllable generative models, and multimodal learning."
     />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="assets/hero-motion-reel-poster.jpg?v=20260827" />
+    <meta property="og:image" content="assets/hero-motion-reel-poster.jpg?v=20260828" />
     <title>Zeyu Ling | 3D Motion Researcher</title>
     <link rel="icon" href="avatar/avatar.jpg" />
-    <link rel="preload" as="image" href="assets/hero-motion-reel-poster.jpg?v=20260827" media="(min-width: 761px)" fetchpriority="high" />
-    <link rel="preload" as="image" href="assets/hero-motion-reel-poster-mobile.jpg?v=20260827" media="(max-width: 760px)" fetchpriority="high" />
+    <script>
+      (() => {
+        const variants = ["gentrack", "prism", "synclip"];
+        const stateKey = "zeyu.heroReelShuffle.v20260828";
+        const randomIndex = (limit) => {
+          if (limit <= 1) return 0;
+          try {
+            const value = new Uint32Array(1);
+            window.crypto.getRandomValues(value);
+            return value[0] % limit;
+          } catch {
+            return Math.floor(Math.random() * limit);
+          }
+        };
+        const shuffle = (items) => {
+          const result = [...items];
+          for (let index = result.length - 1; index > 0; index -= 1) {
+            const swapIndex = randomIndex(index + 1);
+            [result[index], result[swapIndex]] = [result[swapIndex], result[index]];
+          }
+          return result;
+        };
+        const isValidState = (value) =>
+          value &&
+          Array.isArray(value.queue) &&
+          value.queue.length < variants.length &&
+          value.queue.every((id) => variants.includes(id)) &&
+          new Set(value.queue).size === value.queue.length &&
+          (!value.last || variants.includes(value.last)) &&
+          (!value.last || !value.queue.includes(value.last)) &&
+          (Boolean(value.last) || value.queue.length === 0);
+
+        let state = null;
+        try {
+          const storedState = window.sessionStorage.getItem(stateKey);
+          if (storedState) state = JSON.parse(storedState);
+        } catch {
+          // history.state below keeps reload rotation available when storage is blocked.
+        }
+        if (!isValidState(state)) {
+          const historyState = window.history.state?.[stateKey];
+          state = isValidState(historyState) ? historyState : { queue: [], last: "" };
+        }
+
+        let queue = [...state.queue];
+        if (!queue.length) {
+          queue = shuffle(variants);
+          if (queue[0] === state.last && queue.length > 1) {
+            const swapIndex = 1 + randomIndex(queue.length - 1);
+            [queue[0], queue[swapIndex]] = [queue[swapIndex], queue[0]];
+          }
+        }
+
+        const selected = queue.shift() || variants[0];
+        const nextState = { queue, last: selected };
+        try {
+          window.sessionStorage.setItem(stateKey, JSON.stringify(nextState));
+        } catch {
+          // history.state is also updated as a storage-free fallback.
+        }
+        try {
+          const currentHistoryState = window.history.state && typeof window.history.state === "object" ? window.history.state : {};
+          window.history.replaceState({ ...currentHistoryState, [stateKey]: nextState }, "");
+        } catch {
+          // Rotation remains random if both persistence mechanisms are unavailable.
+        }
+
+        const posters = {
+          gentrack: {
+            desktop: "assets/hero-motion-reel-poster.jpg?v=20260828",
+            mobile: "assets/hero-motion-reel-poster-mobile.jpg?v=20260828"
+          },
+          prism: {
+            desktop: "assets/hero-motion-reel-poster-prism.jpg?v=20260828",
+            mobile: "assets/hero-motion-reel-poster-prism-mobile.jpg?v=20260828"
+          },
+          synclip: {
+            desktop: "assets/hero-motion-reel-poster-synclip.jpg?v=20260828",
+            mobile: "assets/hero-motion-reel-poster-synclip-mobile.jpg?v=20260828"
+          }
+        };
+        const selectedPosters = posters[selected] || posters.gentrack;
+        document.documentElement.dataset.heroReelVariant = selected;
+        document.documentElement.style.setProperty("--hero-reel-poster-desktop", `url("${selectedPosters.desktop}")`);
+        document.documentElement.style.setProperty("--hero-reel-poster-mobile", `url("${selectedPosters.mobile}")`);
+
+        [
+          { href: selectedPosters.desktop, media: "(min-width: 761px)" },
+          { href: selectedPosters.mobile, media: "(max-width: 760px)" }
+        ].forEach(({ href, media }) => {
+          const preload = document.createElement("link");
+          preload.rel = "preload";
+          preload.as = "image";
+          preload.href = href;
+          preload.media = media;
+          preload.fetchPriority = "high";
+          document.head.append(preload);
+        });
+      })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=20260827" />
+    <link rel="stylesheet" href="styles.css?v=20260828" />
     <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
-    <script src="script.js?v=20260827" defer></script>
+    <script src="script.js?v=20260828" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -74,8 +172,8 @@
           loop
           playsinline
           preload="none"
-          data-src-desktop="assets/hero-motion-reel.mp4?v=20260827"
-          data-src-mobile="assets/hero-motion-reel-mobile.mp4?v=20260827"
+          data-src-desktop="assets/hero-motion-reel.mp4?v=20260828"
+          data-src-mobile="assets/hero-motion-reel-mobile.mp4?v=20260828"
           aria-hidden="true"
         ></video>
         <div class="hero-scrim" aria-hidden="true"></div>
@@ -121,7 +219,7 @@
           <div class="hero-caption" aria-hidden="true">
             <span class="live-dot"></span>
             <span data-i18n="hero.caption">Selected research demos</span>
-            <strong data-hero-reel-title>GenTrack</strong>
+            <strong data-hero-reel-title>Research</strong>
             <span data-hero-reel-index>01 / 04</span>
           </div>
           <button
@@ -130,6 +228,7 @@
             aria-controls="hero-reel"
             aria-label="Pause research reel"
             title="Pause research reel"
+            hidden
           >
             <i data-lucide="pause" aria-hidden="true"></i>
           </button>

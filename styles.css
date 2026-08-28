@@ -14,6 +14,8 @@
   --green: #47834a;
   --header-height: 68px;
   --shell: min(1180px, calc(100% - 48px));
+  --hero-reel-poster-desktop: url("assets/hero-motion-reel-poster.jpg?v=20260828");
+  --hero-reel-poster-mobile: url("assets/hero-motion-reel-poster-mobile.jpg?v=20260828");
   color-scheme: light;
 }
 
@@ -232,7 +234,7 @@ iframe {
   overflow: hidden;
   display: flex;
   align-items: flex-end;
-  background: #0c1110 url("assets/hero-motion-reel-poster.jpg?v=20260827") center / cover no-repeat;
+  background: #0c1110 var(--hero-reel-poster-desktop) center / cover no-repeat;
   color: #fff;
 }
 
@@ -1513,7 +1515,7 @@ html[data-theme="dark"] .paper-award {
     height: 81svh;
     min-height: 630px;
     max-height: 730px;
-    background-image: url("assets/hero-motion-reel-poster-mobile.jpg?v=20260827");
+    background-image: var(--hero-reel-poster-mobile);
   }
 
   .hero-video {

@@ -171,17 +171,75 @@ const heroReelIndex = document.querySelector("[data-hero-reel-index]");
 const reduceMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 const mobileHeroQuery = window.matchMedia("(max-width: 760px)");
 
-const heroReelSegments = [
-  { start: 0, title: "GenTrack" },
-  { start: 4, title: "PRISM" },
-  { start: 7.8, title: "VersatileMotion" },
-  { start: 11.6, title: "SyncLipMAE" }
-];
+const heroReelVariants = {
+  gentrack: {
+    id: "gentrack",
+    desktop: "assets/hero-motion-reel.mp4?v=20260828",
+    mobile: "assets/hero-motion-reel-mobile.mp4?v=20260828",
+    posterDesktop: "assets/hero-motion-reel-poster.jpg?v=20260828",
+    posterMobile: "assets/hero-motion-reel-poster-mobile.jpg?v=20260828",
+    segments: [
+      { start: 0, title: "GenTrack" },
+      { start: 4, title: "PRISM" },
+      { start: 7.8, title: "VersatileMotion" },
+      { start: 11.6, title: "SyncLipMAE" }
+    ]
+  },
+  prism: {
+    id: "prism",
+    desktop: "assets/hero-motion-reel-prism.mp4?v=20260828",
+    mobile: "assets/hero-motion-reel-prism-mobile.mp4?v=20260828",
+    posterDesktop: "assets/hero-motion-reel-poster-prism.jpg?v=20260828",
+    posterMobile: "assets/hero-motion-reel-poster-prism-mobile.jpg?v=20260828",
+    segments: [
+      { start: 0, title: "PRISM" },
+      { start: 4, title: "GenTrack" },
+      { start: 7.8, title: "SyncLipMAE" },
+      { start: 11.6, title: "VersatileMotion" }
+    ]
+  },
+  synclip: {
+    id: "synclip",
+    desktop: "assets/hero-motion-reel-synclip.mp4?v=20260828",
+    mobile: "assets/hero-motion-reel-synclip-mobile.mp4?v=20260828",
+    posterDesktop: "assets/hero-motion-reel-poster-synclip.jpg?v=20260828",
+    posterMobile: "assets/hero-motion-reel-poster-synclip-mobile.jpg?v=20260828",
+    segments: [
+      { start: 0, title: "SyncLipMAE" },
+      { start: 4, title: "VersatileMotion" },
+      { start: 7.8, title: "GenTrack" },
+      { start: 11.6, title: "PRISM" }
+    ]
+  }
+};
+
+const heroReelVariant = heroReelVariants[root.dataset.heroReelVariant] || heroReelVariants.gentrack;
+const heroReelSegments = heroReelVariant.segments;
+
+function configureHeroReelVariant() {
+  if (!hero || !heroVideo) return;
+
+  root.dataset.heroReelVariant = heroReelVariant.id;
+  hero.dataset.heroReelVariant = heroReelVariant.id;
+  heroVideo.dataset.heroReelVariant = heroReelVariant.id;
+  heroVideo.dataset.srcDesktop = heroReelVariant.desktop;
+  heroVideo.dataset.srcMobile = heroReelVariant.mobile;
+  heroVideo.poster = mobileHeroQuery.matches ? heroReelVariant.posterMobile : heroReelVariant.posterDesktop;
+  if (heroReelTitle) heroReelTitle.textContent = heroReelSegments[0].title;
+  if (heroReelIndex) heroReelIndex.textContent = `01 / ${String(heroReelSegments.length).padStart(2, "0")}`;
+}
+
+configureHeroReelVariant();
 
 let heroReelInView = true;
 let heroReelPausedByUser = false;
 let heroReelLoaded = false;
 let heroReelUnavailable = false;
+let heroReelRequestedSource = "";
+let heroReelSourceRevision = 0;
+let heroReelSourceRestoring = false;
+let heroReelPendingResumeTime = 0;
+let cancelHeroReelSourceRestore = null;
 
 const storedLanguage = localStorage.getItem("language");
 const storedTheme = localStorage.getItem("theme");
@@ -233,12 +291,19 @@ function getHeroReelSource() {
   return mobileHeroQuery.matches ? heroVideo.dataset.srcMobile : heroVideo.dataset.srcDesktop;
 }
 
+function getHeroReelPoster() {
+  return mobileHeroQuery.matches ? heroReelVariant.posterMobile : heroReelVariant.posterDesktop;
+}
+
 function loadHeroReel() {
   if (!heroVideo || heroReelLoaded || heroReelUnavailable || reduceMotionQuery.matches || navigator.connection?.saveData) return;
 
+  const source = new URL(getHeroReelSource(), document.baseURI).href;
   heroVideo.muted = true;
   heroVideo.preload = "auto";
-  heroVideo.src = getHeroReelSource();
+  heroReelRequestedSource = source;
+  heroReelSourceRevision += 1;
+  heroVideo.src = source;
   heroVideo.load();
   heroReelLoaded = true;
 }
@@ -247,31 +312,111 @@ function switchHeroReelSource() {
   if (!heroVideo || !heroReelLoaded || heroReelUnavailable || reduceMotionQuery.matches || navigator.connection?.saveData) return;
 
   const nextSource = new URL(getHeroReelSource(), document.baseURI).href;
-  if (heroVideo.currentSrc === nextSource) return;
+  if (heroReelRequestedSource === nextSource) return;
 
-  const resumeTime = Number.isFinite(heroVideo.currentTime) ? heroVideo.currentTime : 0;
-  const shouldResume = !heroVideo.paused && !heroReelPausedByUser && heroReelInView && !document.hidden;
+  const currentTime = Number.isFinite(heroVideo.currentTime) ? heroVideo.currentTime : 0;
+  const resumeTime = heroReelSourceRestoring ? heroReelPendingResumeTime : currentTime;
+  heroReelPendingResumeTime = resumeTime;
+  const revision = ++heroReelSourceRevision;
+  heroReelRequestedSource = nextSource;
+  cancelHeroReelSourceRestore?.();
+  heroReelSourceRestoring = true;
 
   heroVideo.pause();
   heroVideo.classList.remove("is-ready");
-  heroVideo.addEventListener(
-    "loadedmetadata",
-    () => {
-      if (Number.isFinite(heroVideo.duration)) {
-        heroVideo.currentTime = Math.min(resumeTime, Math.max(0, heroVideo.duration - 0.05));
+  heroVideo.poster = getHeroReelPoster();
+  heroReelToggle.hidden = true;
+
+  const restoreEvents = ["loadedmetadata", "loadeddata", "progress", "canplay", "canplaythrough"];
+  let seekedHandler = null;
+  let seekingToResumeTime = false;
+  let restoreFinished = false;
+  const cleanupRestore = () => {
+    restoreEvents.forEach((eventName) => heroVideo.removeEventListener(eventName, attemptRestore));
+    if (seekedHandler) heroVideo.removeEventListener("seeked", seekedHandler);
+    if (cancelHeroReelSourceRestore === cleanupRestore) cancelHeroReelSourceRestore = null;
+  };
+  const revealRestoredSource = () => {
+    if (restoreFinished) return;
+    if (revision !== heroReelSourceRevision) {
+      restoreFinished = true;
+      cleanupRestore();
+      return;
+    }
+
+    restoreFinished = true;
+    cleanupRestore();
+    heroReelSourceRestoring = false;
+    heroReelPendingResumeTime = Number.isFinite(heroVideo.currentTime) ? heroVideo.currentTime : resumeTime;
+    syncHeroReelLabel();
+    if (!reduceMotionQuery.matches && !navigator.connection?.saveData && !heroReelUnavailable) {
+      heroVideo.classList.add("is-ready");
+      hero.classList.remove("is-reel-static");
+      heroReelToggle.hidden = false;
+    }
+    playHeroReel();
+    syncHeroReelControl();
+  };
+  function attemptRestore() {
+    if (revision !== heroReelSourceRevision) {
+      cleanupRestore();
+      return;
+    }
+    if (seekingToResumeTime || !Number.isFinite(heroVideo.duration)) return;
+
+    const targetTime = Math.min(resumeTime, Math.max(0, heroVideo.duration - 0.05));
+    if (targetTime <= 0.05) {
+      revealRestoredSource();
+      return;
+    }
+
+    const rangeContainsTarget = (ranges) => {
+      for (let index = 0; index < ranges.length; index += 1) {
+        if (targetTime >= ranges.start(index) - 0.05 && targetTime <= ranges.end(index) + 0.05) return true;
       }
+      return false;
+    };
+    const canSeekToTarget =
+      rangeContainsTarget(heroVideo.seekable) ||
+      rangeContainsTarget(heroVideo.buffered) ||
+      heroVideo.readyState >= HTMLMediaElement.HAVE_ENOUGH_DATA;
+    if (!canSeekToTarget) return;
+
+    seekingToResumeTime = true;
+    seekedHandler = revealRestoredSource;
+    heroVideo.addEventListener("seeked", seekedHandler, { once: true });
+    try {
+      heroVideo.currentTime = targetTime;
       syncHeroReelLabel();
-      if (shouldResume) playHeroReel();
-    },
-    { once: true }
-  );
-  heroVideo.src = getHeroReelSource();
+      if (!heroVideo.seeking && Math.abs(heroVideo.currentTime - targetTime) < 0.12) {
+        queueMicrotask(revealRestoredSource);
+      }
+    } catch {
+      heroVideo.removeEventListener("seeked", seekedHandler);
+      seekedHandler = null;
+      seekingToResumeTime = false;
+    }
+  }
+
+  restoreEvents.forEach((eventName) => heroVideo.addEventListener(eventName, attemptRestore));
+  cancelHeroReelSourceRestore = cleanupRestore;
+  heroVideo.src = nextSource;
   heroVideo.load();
   syncHeroReelControl();
 }
 
 async function playHeroReel() {
-  if (!heroVideo || !heroReelInView || document.hidden || heroReelPausedByUser || heroReelUnavailable) return;
+  if (
+    !heroVideo ||
+    !heroReelInView ||
+    document.hidden ||
+    heroReelPausedByUser ||
+    heroReelUnavailable ||
+    heroReelSourceRestoring ||
+    reduceMotionQuery.matches ||
+    navigator.connection?.saveData
+  )
+    return;
 
   loadHeroReel();
   if (!heroReelLoaded) return;
@@ -301,7 +446,7 @@ function initHeroReel() {
   });
 
   const showHeroReel = () => {
-    if (prefersStatic()) return;
+    if (prefersStatic() || heroReelUnavailable || heroReelSourceRestoring) return;
     heroVideo.classList.add("is-ready");
     hero.classList.remove("is-reel-static");
     heroReelToggle.hidden = false;
@@ -316,6 +461,10 @@ function initHeroReel() {
   heroVideo.addEventListener("seeked", syncHeroReelLabel);
   heroVideo.addEventListener("error", () => {
     heroReelUnavailable = true;
+    heroReelSourceRevision += 1;
+    cancelHeroReelSourceRestore?.();
+    heroReelSourceRestoring = false;
+    heroReelPendingResumeTime = 0;
     markHeroReelStatic();
   });
 
@@ -326,7 +475,7 @@ function initHeroReel() {
     }
 
     hero.classList.remove("is-reel-static");
-    heroReelToggle.hidden = false;
+    switchHeroReelSource();
     playHeroReel();
   };
 
