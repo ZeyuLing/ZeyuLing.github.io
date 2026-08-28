@@ -162,8 +162,24 @@ const themeButton = document.querySelector(".theme-toggle");
 const menuButton = document.querySelector(".menu-toggle");
 const mobileNav = document.querySelector(".mobile-nav");
 
-const storedLanguage = localStorage.getItem("language");
-const storedTheme = localStorage.getItem("theme");
+function readPreference(key) {
+  try {
+    return window.localStorage.getItem(key);
+  } catch {
+    return null;
+  }
+}
+
+function writePreference(key, value) {
+  try {
+    window.localStorage.setItem(key, value);
+  } catch {
+    // Theme and language still work for the current page when storage is unavailable.
+  }
+}
+
+const storedLanguage = readPreference("language");
+const storedTheme = readPreference("theme");
 let language = storedLanguage === "zh" ? "zh" : "en";
 
 function updateIcons() {
@@ -179,7 +195,7 @@ function setLanguage(nextLanguage) {
   });
   languageButton.querySelector("span").textContent = language === "en" ? "中" : "EN";
   languageButton.setAttribute("aria-label", language === "en" ? "Switch to Chinese" : "切换到英文");
-  localStorage.setItem("language", language);
+  writePreference("language", language);
   window.heroMontageController?.syncControl();
 }
 
@@ -188,7 +204,7 @@ function setTheme(theme) {
   themeButton.innerHTML = `<i data-lucide="${theme === "dark" ? "sun" : "moon"}" aria-hidden="true"></i>`;
   themeButton.setAttribute("aria-label", theme === "dark" ? "Use light theme" : "Use dark theme");
   document.querySelector('meta[name="theme-color"]').setAttribute("content", theme === "dark" ? "#101310" : "#f4f4ef");
-  localStorage.setItem("theme", theme);
+  writePreference("theme", theme);
   updateIcons();
 }
 
@@ -237,6 +253,10 @@ document.querySelectorAll(".paper-media").forEach((media) => {
 
     panel.classList.add("is-loading");
     panel.setAttribute("aria-busy", "true");
+    if (video.dataset.poster) {
+      video.poster = video.dataset.poster;
+      video.removeAttribute("data-poster");
+    }
     video.src = video.dataset.src;
     video.removeAttribute("data-src");
 
@@ -282,6 +302,5 @@ document.getElementById("year").textContent = new Date().getFullYear();
 const preferredTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 setLanguage(language);
 setTheme(storedTheme === "dark" || storedTheme === "light" ? storedTheme : preferredTheme);
-window.heroMontageController?.init();
 syncHeader();
 updateIcons();

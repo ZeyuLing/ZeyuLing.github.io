@@ -16,7 +16,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:image" content="assets/hero-clips/gentrack-01-poster.jpg?v=20260828f" />
     <title>Zeyu Ling | 3D Motion Researcher</title>
-    <link rel="icon" href="avatar/avatar.jpg" />
+    <link rel="icon" type="image/webp" href="avatar/avatar-portrait.webp" />
     <script>
       (() => {
         const assetVersion = "20260828f";
@@ -198,16 +198,36 @@
         });
       })();
     </script>
+    <script src="hero-montage.js?v=20260828i" defer fetchpriority="high"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap"
       rel="stylesheet"
+      media="print"
+      onload="this.onload=null;this.media='all'"
     />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
     <link rel="stylesheet" href="styles.css?v=20260828g" />
-    <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
-    <script src="hero-montage.js?v=20260828f" defer></script>
-    <script src="script.js?v=20260828h" defer></script>
+    <script src="script.js?v=20260828i" defer></script>
+    <script>
+      window.addEventListener(
+        "load",
+        () => {
+          const icons = document.createElement("script");
+          icons.src = "https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js";
+          icons.async = true;
+          icons.onload = () => window.lucide?.createIcons();
+          document.head.append(icons);
+        },
+        { once: true }
+      );
+    </script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -249,6 +269,45 @@
       <section class="hero" aria-labelledby="hero-title">
         <video id="hero-clip-a" class="hero-video" muted playsinline preload="none" data-hero-slot="a" aria-hidden="true"></video>
         <video id="hero-clip-b" class="hero-video" muted playsinline preload="none" data-hero-slot="b" aria-hidden="true"></video>
+        <script>
+          (() => {
+            const clip = window.__heroMontage?.playlist?.[0];
+            const video = document.getElementById("hero-clip-a");
+            const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            if (!clip || !video || reduceMotion || navigator.connection?.saveData) return;
+
+            const mobile = window.matchMedia("(max-width: 760px)").matches;
+            const source = mobile ? clip.mobile : clip.desktop;
+            const hero = video.closest(".hero");
+            const revealVideo = () => {
+              if (video.dataset.heroBootstrapSource !== source) return;
+              video.classList.add("is-ready", "is-active");
+              video.style.zIndex = "1";
+              video.dataset.heroSlotRole = "bootstrap";
+              hero?.classList.remove("is-reel-static");
+              if (hero) hero.dataset.heroState = "playing";
+            };
+            const revealFirstFrame = () => {
+              if ("requestVideoFrameCallback" in video) video.requestVideoFrameCallback(revealVideo);
+              else window.requestAnimationFrame(revealVideo);
+            };
+
+            video.defaultMuted = true;
+            video.muted = true;
+            video.autoplay = true;
+            video.loop = true;
+            video.preload = "auto";
+            video.poster = mobile ? clip.posterMobile : clip.posterDesktop;
+            video.dataset.heroBootstrapSource = source;
+            video.dataset.heroBootstrapClip = clip.id;
+            video.addEventListener("playing", revealFirstFrame, { once: true });
+            video.src = source;
+            video.load();
+            video.play().catch(() => {
+              // The full controller keeps the poster visible and offers manual retry.
+            });
+          })();
+        </script>
         <div class="hero-scrim" aria-hidden="true"></div>
 
         <div class="hero-inner section-shell">
@@ -256,7 +315,7 @@
             <p class="hero-kicker reveal" data-i18n="hero.kicker">AI researcher · 3D motion generation</p>
             <h1 id="hero-title" class="reveal">Zeyu Ling</h1>
             <div class="hero-identity reveal">
-              <img src="avatar/avatar.jpg" alt="Portrait of Zeyu Ling" />
+              <img src="avatar/avatar-portrait.webp" alt="Portrait of Zeyu Ling" width="216" height="303" decoding="async" fetchpriority="low" />
               <div>
                 <p data-i18n="hero.statement">Researcher in 3D human motion generation and multimodal generative models.</p>
                 <span>凌泽宇 · Hangzhou, China</span>
@@ -387,8 +446,8 @@
                 <button class="media-tab" type="button" data-media-target="demo" aria-selected="false"><i data-lucide="play"></i><span data-i18n="common.demo">Demo</span></button>
               </div>
               <div class="media-stage media-stage-contain">
-                <div class="media-panel active" data-media-panel="figure"><img src="assets/gentrack-teaser.webp" alt="GenTrack generator–tracker co-training and robot execution overview" decoding="async" /></div>
-                <div class="media-panel" data-media-panel="demo" hidden><video controls muted playsinline preload="none" poster="assets/gentrack-teaser.webp" data-src="assets/gentrack-demo.mp4" aria-label="GenTrack research demo"></video></div>
+                <div class="media-panel active" data-media-panel="figure"><img src="assets/gentrack-teaser.webp" alt="GenTrack generator–tracker co-training and robot execution overview" loading="lazy" decoding="async" fetchpriority="low" /></div>
+                <div class="media-panel" data-media-panel="demo" hidden><video controls muted playsinline preload="none" data-poster="assets/gentrack-teaser.webp" data-src="assets/gentrack-demo.mp4" aria-label="GenTrack research demo"></video></div>
               </div>
             </div>
             <div class="paper-content">
@@ -407,8 +466,8 @@
                 <button class="media-tab" type="button" data-media-target="demo" aria-selected="false"><i data-lucide="play"></i><span data-i18n="common.demo">Demo</span></button>
               </div>
               <div class="media-stage media-stage-contain">
-                <div class="media-panel active" data-media-panel="figure"><img src="assets/prism-overview.webp" alt="PRISM structured kinematic-unit latent manifold and KU-FlowT framework overview" decoding="async" /></div>
-                <div class="media-panel" data-media-panel="demo" hidden><video controls playsinline preload="none" poster="assets/prism-demo-poster.jpg" data-src="assets/prism-demo.mp4" aria-label="PRISM research demo covering text-to-motion, pose-conditioned continuation, sequential generation, and narrative motion composition"></video></div>
+                <div class="media-panel active" data-media-panel="figure"><img src="assets/prism-overview.webp" alt="PRISM structured kinematic-unit latent manifold and KU-FlowT framework overview" loading="lazy" decoding="async" fetchpriority="low" /></div>
+                <div class="media-panel" data-media-panel="demo" hidden><video controls playsinline preload="none" data-poster="assets/prism-demo-poster.jpg" data-src="assets/prism-demo.mp4" aria-label="PRISM research demo covering text-to-motion, pose-conditioned continuation, sequential generation, and narrative motion composition"></video></div>
               </div>
             </div>
             <div class="paper-content">
@@ -427,8 +486,8 @@
                 <button class="media-tab" type="button" data-media-target="demo" aria-selected="false"><i data-lucide="play"></i><span data-i18n="common.demo">Demo</span></button>
               </div>
               <div class="media-stage">
-                <div class="media-panel active" data-media-panel="figure"><img src="assets/versatilemotion-teaser.webp" alt="VersatileMotion teaser" decoding="async" /></div>
-                <div class="media-panel" data-media-panel="demo" hidden><video controls muted loop playsinline preload="none" poster="assets/versatilemotion-demo-poster.jpg" data-src="assets/versatilemotion-demo.mp4"></video></div>
+                <div class="media-panel active" data-media-panel="figure"><img src="assets/versatilemotion-teaser.webp" alt="VersatileMotion teaser" loading="lazy" decoding="async" fetchpriority="low" /></div>
+                <div class="media-panel" data-media-panel="demo" hidden><video controls muted loop playsinline preload="none" data-poster="assets/versatilemotion-demo-poster.jpg" data-src="assets/versatilemotion-demo.mp4"></video></div>
               </div>
             </div>
             <div class="paper-content">
@@ -447,8 +506,8 @@
                 <button class="media-tab" type="button" data-media-target="demo" aria-selected="false"><i data-lucide="play"></i><span data-i18n="common.demo">Demo</span></button>
               </div>
               <div class="media-stage">
-                <div class="media-panel active" data-media-panel="figure"><img src="assets/synclipmae-figure.webp" alt="SyncLipMAE task overview" decoding="async" /></div>
-                <div class="media-panel" data-media-panel="demo" hidden><video controls muted loop playsinline preload="none" poster="assets/synclipmae-figure.webp" data-src="assets/synclipmae-demo.mp4"></video></div>
+                <div class="media-panel active" data-media-panel="figure"><img src="assets/synclipmae-figure.webp" alt="SyncLipMAE task overview" loading="lazy" decoding="async" fetchpriority="low" /></div>
+                <div class="media-panel" data-media-panel="demo" hidden><video controls muted loop playsinline preload="none" data-poster="assets/synclipmae-figure.webp" data-src="assets/synclipmae-demo.mp4"></video></div>
               </div>
             </div>
             <div class="paper-content">
@@ -467,8 +526,8 @@
                 <button class="media-tab" type="button" data-media-target="demo" aria-selected="false"><i data-lucide="play"></i><span data-i18n="common.demo">Demo</span></button>
               </div>
               <div class="media-stage">
-                <div class="media-panel active" data-media-panel="figure"><img src="assets/enchantdance-pipeline.webp" alt="EnchantDance method pipeline" decoding="async" /></div>
-                <div class="media-panel" data-media-panel="demo" hidden><video controls muted loop playsinline preload="none" poster="assets/enchantdance-poster.jpg" data-src="assets/enchantdance-demo.mp4"></video></div>
+                <div class="media-panel active" data-media-panel="figure"><img src="assets/enchantdance-pipeline.webp" alt="EnchantDance method pipeline" loading="lazy" decoding="async" fetchpriority="low" /></div>
+                <div class="media-panel" data-media-panel="demo" hidden><video controls muted loop playsinline preload="none" data-poster="assets/enchantdance-poster.jpg" data-src="assets/enchantdance-demo.mp4"></video></div>
               </div>
             </div>
             <div class="paper-content">
@@ -487,7 +546,7 @@
                 <button class="media-tab disabled" type="button" disabled title="No public video demo"><i data-lucide="video-off"></i><span data-i18n="common.noDemo">No public demo</span></button>
               </div>
               <div class="media-stage">
-                <div class="media-panel active" data-media-panel="figure"><img src="assets/epic-pipeline.webp" alt="EPIC method pipeline" decoding="async" /></div>
+                <div class="media-panel active" data-media-panel="figure"><img src="assets/epic-pipeline.webp" alt="EPIC method pipeline" loading="lazy" decoding="async" fetchpriority="low" /></div>
               </div>
             </div>
             <div class="paper-content">
@@ -506,8 +565,8 @@
                 <button class="media-tab" type="button" data-media-target="demo" aria-selected="false"><i data-lucide="play"></i><span data-i18n="common.demo">Demo</span></button>
               </div>
               <div class="media-stage">
-                <div class="media-panel active" data-media-panel="figure"><img src="assets/mcm-pipeline.webp" alt="MCM method pipeline" decoding="async" /></div>
-                <div class="media-panel" data-media-panel="demo" hidden><video controls muted loop playsinline preload="none" poster="assets/mcm-poster.jpg?v=20260827" data-src="assets/mcm-demo.mp4?v=20260827"></video></div>
+                <div class="media-panel active" data-media-panel="figure"><img src="assets/mcm-pipeline.webp" alt="MCM method pipeline" loading="lazy" decoding="async" fetchpriority="low" /></div>
+                <div class="media-panel" data-media-panel="demo" hidden><video controls muted loop playsinline preload="none" data-poster="assets/mcm-poster.jpg?v=20260827" data-src="assets/mcm-demo.mp4?v=20260827"></video></div>
               </div>
             </div>
             <div class="paper-content">
@@ -534,7 +593,7 @@
 
           <div class="project-grid">
             <article class="project-card project-motius">
-              <div class="project-visual project-logo"><span class="motius-fallback" aria-hidden="true"><i data-lucide="waves"></i><strong>Motius</strong></span><img src="assets/motius-logo.png" alt="Motius logo" loading="eager" fetchpriority="high" /></div>
+              <div class="project-visual project-logo"><span class="motius-fallback" aria-hidden="true"><i data-lucide="waves"></i><strong>Motius</strong></span><img src="assets/motius-logo.png" alt="Motius logo" loading="lazy" decoding="async" fetchpriority="low" /></div>
               <div class="project-body"><div class="project-meta"><span>Motion framework</span><i data-lucide="box"></i></div><h3>Motius</h3><p data-i18n="openSource.motius">A modular framework for motion training, evaluation, inference, representation conversion, and reproducible leaderboards.</p><div class="project-chips"><span>Model Zoo</span><span>Evaluators</span><span>Motion Toolkit</span></div><a class="project-link" href="https://github.com/ZeyuLing/Motius/tree/main/motius" target="_blank" rel="noreferrer"><i data-lucide="github"></i><span>Source</span><i data-lucide="arrow-up-right"></i></a></div>
             </article>
 
@@ -544,13 +603,13 @@
             </article>
 
             <article class="project-card project-motionhub">
-              <div class="project-visual motionhub-visual" aria-label="MotionHub dataset examples"><img src="assets/motionhub-music-poster.jpg" alt="Music-driven dance example from MotionHub" loading="eager" /><img src="assets/motionhub-two-poster.jpg" alt="Two-person interaction example from MotionHub" loading="eager" /></div>
+              <div class="project-visual motionhub-visual" aria-label="MotionHub dataset examples"><img src="assets/motionhub-music-poster.jpg" alt="Music-driven dance example from MotionHub" loading="lazy" decoding="async" fetchpriority="low" /><img src="assets/motionhub-two-poster.jpg" alt="Two-person interaction example from MotionHub" loading="lazy" decoding="async" fetchpriority="low" /></div>
               <div class="project-body"><div class="project-meta"><span>Dataset · Toolkit</span><i data-lucide="database"></i></div><h3>MotionHub</h3><p data-i18n="openSource.motionHub">A curated human-motion collection spanning text, music, speech, and two-person interaction.</p><div class="project-stats"><span><strong>1.11M</strong> clips</span><span><strong>1,528</strong> hours</span><span><strong>20</strong> datasets</span></div><div class="project-links"><a class="project-link" href="https://github.com/ZeyuLing/MotionHub" target="_blank" rel="noreferrer"><i data-lucide="github"></i><span>Source</span></a><a class="project-link" href="https://huggingface.co/datasets/ZeyuLing/MotionHub" target="_blank" rel="noreferrer"><span class="hf-icon">HF</span><span>Dataset</span><i data-lucide="arrow-up-right"></i></a></div></div>
             </article>
 
             <article class="project-card project-research-skills">
               <div class="project-visual research-skills-visual">
-                <img src="assets/research-autocode-toolkit.webp" alt="Research AutoCode Toolkit logo" loading="lazy" decoding="async" />
+                <img src="assets/research-autocode-toolkit.webp" alt="Research AutoCode Toolkit logo" loading="lazy" decoding="async" fetchpriority="low" />
                 <div class="research-lifecycle" aria-hidden="true"><span>Discover</span><i data-lucide="arrow-right"></i><span>Experiment</span><i data-lucide="arrow-right"></i><span>Publish</span></div>
               </div>
               <div class="project-body"><div class="project-meta"><span>Agent research skills</span><i data-lucide="workflow"></i></div><h3>Research AutoCode Toolkit</h3><p data-i18n="openSource.researchSkills">Composable, evidence-aware agent workflows spanning literature discovery, idea refinement, audited experiments, manuscript development, scientific figures, review, and rebuttal.</p><div class="project-chips"><span>Literature</span><span>Experiments</span><span>Writing</span><span>Review</span></div><a class="project-link" href="https://github.com/ZeyuLing/research_autocode_skills" target="_blank" rel="noreferrer"><i data-lucide="github"></i><span>Source</span><i data-lucide="arrow-up-right"></i></a></div>
@@ -561,7 +620,7 @@
 
       <section class="contact" id="contact" aria-labelledby="contact-title">
         <div class="contact-inner section-shell">
-          <img src="avatar/avatar.jpg" alt="Zeyu Ling" loading="lazy" />
+          <img src="avatar/avatar-portrait.webp" alt="Zeyu Ling" width="216" height="303" loading="lazy" decoding="async" fetchpriority="low" />
           <div class="contact-copy"><p class="eyebrow" id="contact-title" data-i18n="contact.eyebrow">Contact</p><p data-i18n="contact.body">I am glad to discuss generative AI, multimodal learning, embodied intelligence, and open research collaboration.</p></div>
           <a class="contact-email" href="mailto:zeyuling@zju.edu.cn"><i data-lucide="mail"></i><span>zeyuling@zju.edu.cn</span><i data-lucide="arrow-up-right"></i></a>
         </div>

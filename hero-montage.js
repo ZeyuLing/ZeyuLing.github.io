@@ -31,6 +31,9 @@
   const CROSSFADE_MS = 560;
   const CROSSFADE_SECONDS = CROSSFADE_MS / 1000;
   const PREPARE_TIMEOUT_MS = 12000;
+  const STARTUP_BUDGET_MS = 5000;
+  const STARTUP_MAX_ATTEMPTS = 2;
+  const INCOMING_BUDGET_MS = 6000;
   const slots = heroVideos.map((element) => ({
     element,
     clip: null,
@@ -60,7 +63,6 @@
   let resumePosition = 0;
   let resumeTime = 0;
   const failedSources = new Set();
-  const unavailableModes = new Set();
 
   const emptyController = {
     init() {},
@@ -157,8 +159,13 @@
         !slot.element.paused &&
         !slot.element.ended
     );
+    const needsRetry = hero.dataset.heroState === "retry";
     const isChinese = root.lang.toLowerCase().startsWith("zh");
-    const label = isPlaying
+    const label = needsRetry
+      ? isChinese
+        ? "重试播放研究短片"
+        : "Retry research reel"
+      : isPlaying
       ? isChinese
         ? "暂停研究短片"
         : "Pause research reel"
@@ -166,7 +173,9 @@
         ? "播放研究短片"
         : "Play research reel";
 
-    heroToggle.innerHTML = `<i data-lucide="${isPlaying ? "pause" : "play"}" aria-hidden="true"></i>`;
+    heroToggle.innerHTML = needsRetry
+      ? '<span aria-hidden="true">↻</span>'
+      : `<i data-lucide="${isPlaying ? "pause" : "play"}" aria-hidden="true"></i>`;
     heroToggle.setAttribute("aria-label", label);
     heroToggle.setAttribute("title", label);
     hero.classList.toggle("is-reel-paused", !isPlaying);
@@ -198,7 +207,7 @@
     video.dataset.heroReady = "false";
   }
 
-  function releaseSlot(slot) {
+  function releaseSlot(slot, { keepMedia = false } = {}) {
     slot.cancel?.();
     slot.cancel = null;
     slot.promise = null;
@@ -209,20 +218,43 @@
     slot.mode = "";
 
     const video = slot.element;
-    video.pause();
     video.classList.remove("is-ready", "is-active", "is-transition-disabled");
     video.style.zIndex = "";
     video.dataset.heroSlotRole = "idle";
     clearClipDataset(video);
-    if (video.hasAttribute("src")) {
-      video.removeAttribute("src");
-      video.load();
+    if (!keepMedia) {
+      video.pause();
+      delete video.dataset.heroBootstrapSource;
+      delete video.dataset.heroBootstrapClip;
+      if (video.hasAttribute("src")) {
+        video.removeAttribute("src");
+        video.load();
+      }
+      video.removeAttribute("poster");
     }
-    video.removeAttribute("poster");
   }
 
-  function prepareSlot(slot, clip, position, restoreTime = 0, role = "loading") {
-    releaseSlot(slot);
+  function canAdoptBootstrap(slot, clip, restoreTime = 0) {
+    const source = sourceFor(clip);
+    const video = slot.element;
+    return (
+      restoreTime <= 0.04 &&
+      video.dataset.heroBootstrapClip === clip.id &&
+      video.dataset.heroBootstrapSource === source &&
+      video.getAttribute("src") === source
+    );
+  }
+
+  function prepareSlot(
+    slot,
+    clip,
+    position,
+    restoreTime = 0,
+    role = "loading",
+    timeoutMs = PREPARE_TIMEOUT_MS
+  ) {
+    const adoptBootstrap = canAdoptBootstrap(slot, clip, restoreTime);
+    releaseSlot(slot, { keepMedia: adoptBootstrap });
     const revision = ++slot.revision;
     const mode = sourceMode();
     const source = sourceFor(clip);
@@ -232,6 +264,7 @@
     slot.position = position;
     slot.mode = mode;
     video.muted = true;
+    video.loop = false;
     video.preload = "auto";
     video.poster = posterFor(clip, mode);
     video.dataset.heroSlotRole = role;
@@ -242,13 +275,17 @@
     video.dataset.heroSource = source;
     video.dataset.heroSourceRevision = String(revision);
     video.dataset.heroReady = "false";
+    delete video.dataset.heroBootstrapSource;
+    delete video.dataset.heroBootstrapClip;
 
     const promise = new Promise((resolve) => {
       let settled = false;
-      let metadataReady = false;
+      let metadataReady = video.readyState >= HTMLMediaElement.HAVE_METADATA && Number.isFinite(video.duration);
       let seekReady = restoreTime <= 0.04;
       let targetTime = Math.max(0, restoreTime);
       let timeout = 0;
+      const requiredReadyState =
+        role === "loading" ? HTMLMediaElement.HAVE_CURRENT_DATA : HTMLMediaElement.HAVE_FUTURE_DATA;
 
       const events = ["loadedmetadata", "durationchange", "loadeddata", "canplay", "seeked", "error"];
       const cleanup = () => {
@@ -278,7 +315,7 @@
           settle(false, "cancelled");
           return;
         }
-        if (metadataReady && seekReady && video.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA) {
+        if (metadataReady && seekReady && video.readyState >= requiredReadyState) {
           settle(true, "ready");
         }
       };
@@ -340,9 +377,11 @@
 
       events.forEach((eventName) => video.addEventListener(eventName, onMediaEvent));
       slot.cancel = cancel;
-      timeout = window.setTimeout(() => settle(false, "timeout"), PREPARE_TIMEOUT_MS);
-      video.src = source;
-      video.load();
+      timeout = window.setTimeout(() => settle(false, "timeout"), Math.max(1, timeoutMs));
+      if (!adoptBootstrap) {
+        video.src = source;
+        video.load();
+      }
       checkReady();
     });
 
@@ -373,8 +412,11 @@
     if (!playlist.length || !canPlayNow() || transitioning) return { ok: false, reason: "suspended" };
 
     const localGeneration = generation;
+    const incomingDeadline = performance.now() + INCOMING_BUDGET_MS;
     const incomingSlot = standbySlot();
     for (let offset = 1; offset <= playlist.length; offset += 1) {
+      const remainingBudget = incomingDeadline - performance.now();
+      if (remainingBudget <= 0) return { ok: false, reason: "timeout" };
       const position = normalizePosition(playlistPosition + offset);
       const clip = playlist[position];
       const failureKey = sourceFailureKey(clip);
@@ -392,19 +434,19 @@
           : await incomingSlot.promise;
         if (localGeneration !== generation) return { ok: false, reason: "cancelled" };
         if (result?.ok) return { ...result, position };
-        if (result && (result.reason === "error" || result.reason === "timeout")) {
+        if (result?.reason === "error") {
           failedSources.add(failureKey);
         }
         continue;
       }
 
-      const result = await prepareSlot(incomingSlot, clip, position, 0, "incoming");
+      const result = await prepareSlot(incomingSlot, clip, position, 0, "incoming", remainingBudget);
       if (localGeneration !== generation) return { ok: false, reason: "cancelled" };
       if (result.ok) {
         incomingSlot.element.dataset.heroSlotRole = "incoming";
         return { ...result, position };
       }
-      if (result.reason === "error" || result.reason === "timeout") failedSources.add(failureKey);
+      if (result.reason === "error") failedSources.add(failureKey);
       if (result.reason === "cancelled") return result;
     }
 
@@ -584,13 +626,22 @@
     syncControl();
   }
 
+  function enterRetryMode() {
+    starting = false;
+    transitionPending = false;
+    transitioning = false;
+    clearAdvanceTimer();
+    clearCaptionTimer();
+    clearTransitionTimer();
+    slots.forEach(releaseSlot);
+    hero.classList.add("is-reel-static");
+    heroToggle.hidden = false;
+    setHeroState("retry");
+    syncControl();
+  }
+
   async function startMontage(position = 0, restoreTime = 0) {
     if (!playlist.length || policyIsStatic || unavailable) return;
-    const requestedMode = sourceMode();
-    if (unavailableModes.has(requestedMode)) {
-      enterStaticMode({ permanent: unavailableModes.size >= 2, preservePosition: false });
-      return;
-    }
 
     const localGeneration = ++generation;
     transitionRevision += 1;
@@ -600,39 +651,49 @@
     clearAdvanceTimer();
     clearCaptionTimer();
     clearTransitionTimer();
-    slots.forEach(releaseSlot);
+    const initialPosition = normalizePosition(position);
+    const initialClip = playlist[initialPosition];
+    const preserveBootstrap = Boolean(initialClip && canAdoptBootstrap(slots[0], initialClip, restoreTime));
+    slots.forEach((slot, index) => releaseSlot(slot, { keepMedia: index === 0 && preserveBootstrap }));
     activeSlotIndex = 0;
     heroToggle.hidden = true;
     hero.classList.add("is-reel-static");
 
     let prepared = null;
     let selectedPosition = normalizePosition(position);
-    for (let attempt = 0; attempt < playlist.length; attempt += 1) {
+    const startupDeadline = performance.now() + STARTUP_BUDGET_MS;
+    const attemptLimit = Math.min(STARTUP_MAX_ATTEMPTS, playlist.length);
+    for (let attempt = 0; attempt < attemptLimit; attempt += 1) {
+      const remainingBudget = startupDeadline - performance.now();
+      if (remainingBudget <= 0) break;
       selectedPosition = normalizePosition(position + attempt);
       const clip = playlist[selectedPosition];
       updateActiveClip(selectedPosition, "loading");
-      prepared = await prepareSlot(slots[0], clip, selectedPosition, attempt === 0 ? restoreTime : 0, "loading");
+      prepared = await prepareSlot(
+        slots[0],
+        clip,
+        selectedPosition,
+        attempt === 0 ? restoreTime : 0,
+        "loading",
+        remainingBudget
+      );
       if (localGeneration !== generation) return;
       if (prepared.ok) break;
-      if (prepared.reason === "error" || prepared.reason === "timeout") {
+      if (prepared.reason === "error") {
         failedSources.add(sourceFailureKey(clip));
       }
     }
 
     if (!prepared?.ok || localGeneration !== generation) {
-      unavailableModes.add(requestedMode);
-      enterStaticMode({ permanent: unavailableModes.size >= 2, preservePosition: false });
+      enterRetryMode();
       return;
     }
-    unavailableModes.delete(requestedMode);
-
     playlistPosition = selectedPosition;
     const slot = slots[0];
     const video = slot.element;
     video.style.zIndex = "1";
     video.classList.add("is-ready", "is-active");
     video.dataset.heroSlotRole = "active";
-    hero.classList.remove("is-reel-static");
     heroToggle.hidden = false;
     starting = false;
     updateActiveClip(playlistPosition, "paused");
@@ -790,4 +851,5 @@
       activeSources: slots.filter((slot) => slot.element.hasAttribute("src")).length
     })
   };
+  init();
 })();
