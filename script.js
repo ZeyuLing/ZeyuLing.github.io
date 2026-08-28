@@ -73,8 +73,7 @@ const translations = {
     "openSource.motionHub": "A curated human-motion collection spanning text, music, speech, and two-person interaction.",
     "openSource.researchSkills": "Composable, evidence-aware agent workflows spanning literature discovery, idea refinement, audited experiments, manuscript development, scientific figures, review, and rebuttal.",
     "contact.eyebrow": "Contact",
-    "contact.title": "Let’s talk about motion research.",
-    "contact.body": "I am glad to discuss 3D motion generation, multimodal learning, and open research collaboration.",
+    "contact.body": "I am glad to discuss generative AI, multimodal learning, embodied intelligence, and open research collaboration.",
     "footer.note": "3D motion generation · multimodal learning"
   },
   zh: {
@@ -151,8 +150,7 @@ const translations = {
     "openSource.motionHub": "覆盖文本、音乐、语音和双人交互的统一人体动作数据集。",
     "openSource.researchSkills": "可组合、证据可追溯的 Agent 科研工作流，覆盖文献发现、idea 打磨、可审计实验、论文写作、科研作图、评审与 rebuttal。",
     "contact.eyebrow": "联系",
-    "contact.title": "欢迎交流动作生成研究。",
-    "contact.body": "欢迎讨论 3D 动作生成、多模态学习与开放研究合作。",
+    "contact.body": "欢迎讨论生成式 AI、多模态学习、具身智能与开放研究合作。",
     "footer.note": "3D 动作生成 · 多模态学习"
   }
 };

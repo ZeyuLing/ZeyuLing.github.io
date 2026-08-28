@@ -1313,10 +1313,6 @@ html[data-theme="dark"] .paper-award {
   color: var(--coral);
 }
 
-.contact-copy h2 {
-  font-size: 39px;
-}
-
 .contact-copy > p:last-child {
   max-width: 600px;
   margin: 10px 0 0;
@@ -1787,10 +1783,6 @@ html[data-theme="dark"] .paper-award {
   .contact-inner > img {
     width: 58px;
     height: 70px;
-  }
-
-  .contact-copy h2 {
-    font-size: 31px;
   }
 
   .contact-copy > p:last-child {
