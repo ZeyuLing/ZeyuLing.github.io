@@ -17,11 +17,11 @@
     />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://zeyuling.github.io/" />
-    <meta property="og:image" content="https://zeyuling.github.io/assets/hero-clips/gentrack-01-poster.jpg?v=20260831a" />
+    <meta property="og:image" content="https://zeyuling.github.io/assets/hero-clips/gentrack-01-poster.jpg?v=20260831b" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Zeyu Ling | Generative AI &amp; Embodied Intelligence" />
     <meta name="twitter:description" content="Research in generative AI, multimodal learning, 3D human motion, and embodied intelligence." />
-    <meta name="twitter:image" content="https://zeyuling.github.io/assets/hero-clips/gentrack-01-poster.jpg?v=20260831a" />
+    <meta name="twitter:image" content="https://zeyuling.github.io/assets/hero-clips/gentrack-01-poster.jpg?v=20260831b" />
     <title>Zeyu Ling | Generative AI &amp; Embodied Intelligence</title>
     <link rel="icon" type="image/webp" href="avatar/avatar-portrait.webp" />
     <script>
@@ -60,7 +60,7 @@
     </script>
     <script>
       (() => {
-        const assetVersion = "20260831a";
+        const assetVersion = "20260831b";
         const stateKey = `zeyu.heroMontage.${assetVersion}`;
         const projects = [
           {
@@ -239,7 +239,7 @@
         });
       })();
     </script>
-    <script src="hero-montage.js?v=20260831a" defer fetchpriority="high"></script>
+    <script src="hero-montage.js?v=20260831b" defer fetchpriority="high"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -254,8 +254,8 @@
         rel="stylesheet"
       />
     </noscript>
-    <link rel="stylesheet" href="styles.css?v=20260831a" />
-    <script src="script.js?v=20260831a" defer></script>
+    <link rel="stylesheet" href="styles.css?v=20260831b" />
+    <script src="script.js?v=20260831b" defer></script>
     <script>
       window.addEventListener(
         "load",
@@ -270,10 +270,10 @@
       );
     </script>
   </head>
-  <body>
+  <body id="top">
     <a class="skip-link" href="#main">Skip to content</a>
 
-    <header class="site-header" id="top">
+    <header class="site-header">
       <a class="wordmark" href="#top" aria-label="Zeyu Ling, home">
         <span class="wordmark-mark">ZL</span>
         <span class="wordmark-name">Zeyu Ling</span>
@@ -378,6 +378,27 @@
             </div>
           </div>
 
+          <nav class="hero-research-index reveal" aria-label="Selected research">
+            <a href="#gentrack">
+              <span class="hero-project-name">GenTrack</span>
+              <span class="hero-project-focus" data-i18n="hero.gentrackFocus">Robot-native generation</span>
+              <span class="hero-project-year">2026</span>
+              <i data-lucide="arrow-down-right" aria-hidden="true"></i>
+            </a>
+            <a href="#prism">
+              <span class="hero-project-name">PRISM</span>
+              <span class="hero-project-focus" data-i18n="hero.prismFocus">Structured motion manifold</span>
+              <span class="hero-project-year">2026</span>
+              <i data-lucide="arrow-down-right" aria-hidden="true"></i>
+            </a>
+            <a href="#versatilemotion">
+              <span class="hero-project-name">VersatileMotion</span>
+              <span class="hero-project-focus" data-i18n="hero.versatileFocus">Unified motion-language systems</span>
+              <span class="hero-project-year">ECCV</span>
+              <i data-lucide="arrow-down-right" aria-hidden="true"></i>
+            </a>
+          </nav>
+
           <div class="hero-status reveal">
             <div>
               <span data-i18n="hero.current">Current position</span>
@@ -470,7 +491,10 @@
       <section class="publications section-shell" id="publications" aria-labelledby="publications-title">
         <div class="section-head publications-head">
           <div class="publications-heading-row">
-            <h2 id="publications-title" data-i18n="publications.title">Publications</h2>
+            <div class="publications-title-block">
+              <h2 id="publications-title" data-i18n="publications.title">Publications</h2>
+              <p data-i18n="publications.intro">Selected systems for embodied generation, structured motion, and multimodal learning.</p>
+            </div>
             <div class="publication-controls">
               <div class="filter-tabs" role="group" aria-label="Filter publications">
                 <button class="filter-button active" type="button" data-filter="all" data-i18n="publications.all" aria-pressed="true">All</button>
@@ -483,7 +507,7 @@
         </div>
 
         <div class="publication-list">
-          <article class="paper-item" data-category="motion">
+          <article class="paper-item paper-featured paper-featured-lead" id="gentrack" data-category="motion">
             <div class="paper-media">
               <div class="media-toolbar" role="tablist" aria-label="GenTrack media">
                 <button class="media-tab active" type="button" data-media-target="figure" aria-selected="true"><i data-lucide="image"></i><span data-i18n="common.figure">Figure</span></button>
@@ -503,7 +527,7 @@
             </div>
           </article>
 
-          <article class="paper-item" data-category="motion">
+          <article class="paper-item paper-featured paper-featured-reverse" id="prism" data-category="motion">
             <div class="paper-media">
               <div class="media-toolbar" role="tablist" aria-label="PRISM media">
                 <button class="media-tab active" type="button" data-media-target="figure" aria-selected="true"><i data-lucide="image"></i><span data-i18n="common.figure">Figure</span></button>
@@ -523,7 +547,7 @@
             </div>
           </article>
 
-          <article class="paper-item" data-category="motion multimodal">
+          <article class="paper-item paper-featured" id="versatilemotion" data-category="motion multimodal">
             <div class="paper-media">
               <div class="media-toolbar" role="tablist" aria-label="VersatileMotion media">
                 <button class="media-tab active" type="button" data-media-target="figure" aria-selected="true"><i data-lucide="image"></i><span data-i18n="common.figure">Figure</span></button>
@@ -543,7 +567,12 @@
             </div>
           </article>
 
-          <article class="paper-item" data-category="multimodal">
+          <div class="publication-archive-heading">
+            <h3 data-i18n="publications.archive">Research archive</h3>
+            <span>2024 — 2026</span>
+          </div>
+
+          <article class="paper-item paper-archive" data-category="multimodal">
             <div class="paper-media">
               <div class="media-toolbar" role="tablist" aria-label="SyncLipMAE media">
                 <button class="media-tab active" type="button" data-media-target="figure" aria-selected="true"><i data-lucide="image"></i><span data-i18n="common.figure">Figure</span></button>
@@ -563,15 +592,13 @@
             </div>
           </article>
 
-          <article class="paper-item" data-category="motion multimodal">
+          <article class="paper-item paper-archive" data-category="motion multimodal">
             <div class="paper-media">
               <div class="media-toolbar" role="tablist" aria-label="EnchantDance media">
                 <button class="media-tab active" type="button" data-media-target="figure" aria-selected="true"><i data-lucide="image"></i><span data-i18n="common.figure">Figure</span></button>
-                <button class="media-tab" type="button" data-media-target="demo" aria-selected="false"><i data-lucide="play"></i><span data-i18n="common.demo">Demo</span></button>
               </div>
               <div class="media-stage">
                 <div class="media-panel active" data-media-panel="figure"><img src="assets/enchantdance-pipeline.webp" alt="EnchantDance method pipeline" loading="lazy" decoding="async" fetchpriority="low" /></div>
-                <div class="media-panel" data-media-panel="demo" hidden><video controls muted loop playsinline preload="none" data-poster="assets/enchantdance-poster.jpg" data-src="assets/enchantdance-demo.mp4" aria-label="EnchantDance research demo"></video></div>
               </div>
             </div>
             <div class="paper-content">
@@ -583,7 +610,7 @@
             </div>
           </article>
 
-          <article class="paper-item" data-category="multimodal">
+          <article class="paper-item paper-archive" data-category="multimodal">
             <div class="paper-media">
               <div class="media-toolbar" role="tablist" aria-label="EPIC media">
                 <button class="media-tab active" type="button" data-media-target="figure" aria-selected="true"><i data-lucide="image"></i><span data-i18n="common.figure">Figure</span></button>
@@ -602,15 +629,13 @@
             </div>
           </article>
 
-          <article class="paper-item" data-category="motion multimodal">
+          <article class="paper-item paper-archive" data-category="motion multimodal">
             <div class="paper-media">
               <div class="media-toolbar" role="tablist" aria-label="MCM media">
                 <button class="media-tab active" type="button" data-media-target="figure" aria-selected="true"><i data-lucide="image"></i><span data-i18n="common.figure">Figure</span></button>
-                <button class="media-tab" type="button" data-media-target="demo" aria-selected="false"><i data-lucide="play"></i><span data-i18n="common.demo">Demo</span></button>
               </div>
               <div class="media-stage">
                 <div class="media-panel active" data-media-panel="figure"><img src="assets/mcm-pipeline.webp" alt="MCM method pipeline" loading="lazy" decoding="async" fetchpriority="low" /></div>
-                <div class="media-panel" data-media-panel="demo" hidden><video controls muted loop playsinline preload="none" data-poster="assets/mcm-poster.jpg?v=20260827" data-src="assets/mcm-demo.mp4?v=20260827" aria-label="MCM research demo"></video></div>
               </div>
             </div>
             <div class="paper-content">

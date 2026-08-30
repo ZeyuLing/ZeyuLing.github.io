@@ -13,6 +13,10 @@ const translations = {
     "hero.educationLabel": "Education",
     "hero.education": "Ph.D. candidate, Zhejiang University",
     "hero.caption": "Selected research demos",
+    "hero.researchIndex": "Selected research",
+    "hero.gentrackFocus": "Robot-native generation",
+    "hero.prismFocus": "Structured motion manifold",
+    "hero.versatileFocus": "Unified motion-language systems",
     "hero.pauseReel": "Pause research reel",
     "hero.playReel": "Play research reel",
     "about.eyebrow": "About",
@@ -64,6 +68,8 @@ const translations = {
     "news.mcm": "MCM was accepted to IJCAI 2024.",
     "publications.eyebrow": "Research",
     "publications.title": "Publications",
+    "publications.intro": "Selected systems for embodied generation, structured motion, and multimodal learning.",
+    "publications.archive": "Research archive",
     "publications.all": "All",
     "publications.motion": "Motion",
     "publications.multimodal": "Multimodal",
@@ -103,6 +109,10 @@ const translations = {
     "hero.educationLabel": "教育背景",
     "hero.education": "浙江大学计算机博士生",
     "hero.caption": "精选研究演示",
+    "hero.researchIndex": "代表性研究",
+    "hero.gentrackFocus": "面向机器人的原生动作生成",
+    "hero.prismFocus": "结构化动作隐空间",
+    "hero.versatileFocus": "统一动作语言系统",
     "hero.pauseReel": "暂停研究视频合集",
     "hero.playReel": "播放研究视频合集",
     "about.eyebrow": "关于",
@@ -154,6 +164,8 @@ const translations = {
     "news.mcm": "MCM 被 IJCAI 2024 接收。",
     "publications.eyebrow": "研究",
     "publications.title": "论文",
+    "publications.intro": "围绕具身生成、结构化动作与多模态学习的代表性系统。",
+    "publications.archive": "研究档案",
     "publications.all": "全部",
     "publications.motion": "动作",
     "publications.multimodal": "多模态",
@@ -284,6 +296,7 @@ function setLanguage(nextLanguage) {
   mobileNav.setAttribute("aria-label", language === "en" ? "Mobile navigation" : "移动导航");
   document.querySelector(".filter-tabs")?.setAttribute("aria-label", text("common.filterPublications"));
   document.querySelector(".hero-actions")?.setAttribute("aria-label", text("common.primaryActions"));
+  document.querySelector(".hero-research-index")?.setAttribute("aria-label", text("hero.researchIndex"));
   syncMenuButton();
   syncThemeButton();
   syncMediaLanguage();
