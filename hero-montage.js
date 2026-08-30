@@ -152,6 +152,15 @@
     setHeroState(state);
   }
 
+  function controlIcon(name) {
+    const paths = {
+      retry: '<path d="M20 11a8.1 8.1 0 1 0 2 5.3" /><path d="M20 4v7h-7" />',
+      pause: '<path d="M8 5v14M16 5v14" />',
+      play: '<path d="m8 5 11 7-11 7Z" />'
+    };
+    return `<svg viewBox="0 0 24 24" aria-hidden="true">${paths[name]}</svg>`;
+  }
+
   function syncControl() {
     const isPlaying = slots.some(
       (slot) =>
@@ -173,13 +182,10 @@
         ? "播放研究短片"
         : "Play research reel";
 
-    heroToggle.innerHTML = needsRetry
-      ? '<span aria-hidden="true">↻</span>'
-      : `<i data-lucide="${isPlaying ? "pause" : "play"}" aria-hidden="true"></i>`;
+    heroToggle.innerHTML = controlIcon(needsRetry ? "retry" : isPlaying ? "pause" : "play");
     heroToggle.setAttribute("aria-label", label);
     heroToggle.setAttribute("title", label);
     hero.classList.toggle("is-reel-paused", !isPlaying);
-    if (window.lucide) window.lucide.createIcons();
   }
 
   function clearAdvanceTimer() {

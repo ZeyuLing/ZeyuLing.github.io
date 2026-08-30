@@ -5,21 +5,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Zeyu Ling is an AI researcher at Tencent Hunyuan3D working on 3D human motion generation and multimodal generative models."
+      content="Zeyu Ling is an AI researcher at Tencent Hunyuan3D working on generative AI, multimodal learning, 3D human motion, and embodied intelligence."
     />
-    <meta name="theme-color" content="#f5f5f0" />
-    <meta property="og:title" content="Zeyu Ling | 3D Motion Researcher" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#f4f4ef" />
+    <link rel="canonical" href="https://zeyuling.github.io/" />
+    <meta property="og:title" content="Zeyu Ling | Generative AI &amp; Embodied Intelligence" />
     <meta
       property="og:description"
-      content="Research in 3D human motion generation, controllable generative models, and multimodal learning."
+      content="Research in generative AI, multimodal learning, 3D human motion, and embodied intelligence."
     />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="assets/hero-clips/gentrack-01-poster.jpg?v=20260828f" />
-    <title>Zeyu Ling | 3D Motion Researcher</title>
+    <meta property="og:url" content="https://zeyuling.github.io/" />
+    <meta property="og:image" content="https://zeyuling.github.io/assets/hero-clips/gentrack-01-poster.jpg?v=20260831a" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Zeyu Ling | Generative AI &amp; Embodied Intelligence" />
+    <meta name="twitter:description" content="Research in generative AI, multimodal learning, 3D human motion, and embodied intelligence." />
+    <meta name="twitter:image" content="https://zeyuling.github.io/assets/hero-clips/gentrack-01-poster.jpg?v=20260831a" />
+    <title>Zeyu Ling | Generative AI &amp; Embodied Intelligence</title>
     <link rel="icon" type="image/webp" href="avatar/avatar-portrait.webp" />
     <script>
+      try {
+        const preferredTheme = window.localStorage.getItem("theme");
+        const initialTheme = preferredTheme === "light" || preferredTheme === "dark"
+          ? preferredTheme
+          : window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light";
+        document.documentElement.dataset.theme = initialTheme;
+        document.querySelector('meta[name="theme-color"]').setAttribute("content", initialTheme === "dark" ? "#101310" : "#f4f4ef");
+      } catch {
+        // The default light theme remains usable when storage is unavailable.
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Zeyu Ling",
+        "alternateName": "凌泽宇",
+        "url": "https://zeyuling.github.io/",
+        "image": "https://zeyuling.github.io/avatar/avatar-portrait.webp",
+        "jobTitle": "AI Researcher",
+        "affiliation": [
+          { "@type": "Organization", "name": "Tencent Hunyuan3D Team" },
+          { "@type": "CollegeOrUniversity", "name": "Zhejiang University" }
+        ],
+        "sameAs": [
+          "https://scholar.google.com/citations?hl=en&user=znEflnQAAAAJ",
+          "https://github.com/ZeyuLing",
+          "https://huggingface.co/ZeyuLing"
+        ]
+      }
+    </script>
+    <script>
       (() => {
-        const assetVersion = "20260830a";
+        const assetVersion = "20260831a";
         const stateKey = `zeyu.heroMontage.${assetVersion}`;
         const projects = [
           {
@@ -198,23 +239,23 @@
         });
       })();
     </script>
-    <script src="hero-montage.js?v=20260828i" defer fetchpriority="high"></script>
+    <script src="hero-montage.js?v=20260831a" defer fetchpriority="high"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap"
       rel="stylesheet"
       media="print"
       onload="this.onload=null;this.media='all'"
     />
     <noscript>
       <link
-        href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap"
         rel="stylesheet"
       />
     </noscript>
-    <link rel="stylesheet" href="styles.css?v=20260828g" />
-    <script src="script.js?v=20260828i" defer></script>
+    <link rel="stylesheet" href="styles.css?v=20260831a" />
+    <script src="script.js?v=20260831a" defer></script>
     <script>
       window.addEventListener(
         "load",
@@ -250,14 +291,14 @@
           <span aria-hidden="true">中</span>
         </button>
         <button class="icon-button theme-toggle" type="button" aria-label="Use dark theme" title="Toggle theme">
-          <i data-lucide="moon" aria-hidden="true"></i>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z" /></svg>
         </button>
-        <button class="icon-button menu-toggle" type="button" aria-label="Open menu" title="Menu" aria-expanded="false">
-          <i data-lucide="menu" aria-hidden="true"></i>
+        <button class="icon-button menu-toggle" type="button" aria-label="Open menu" title="Menu" aria-expanded="false" aria-controls="mobile-navigation">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6H20M4 12H20M4 18H20" /></svg>
         </button>
       </div>
 
-      <nav class="mobile-nav" aria-label="Mobile navigation" hidden>
+      <nav class="mobile-nav" id="mobile-navigation" aria-label="Mobile navigation" hidden>
         <a href="#about" data-i18n="nav.about">About</a>
         <a href="#publications" data-i18n="nav.publications">Publications</a>
         <a href="#open-source" data-i18n="nav.openSource">Open source</a>
@@ -265,7 +306,7 @@
       </nav>
     </header>
 
-    <main id="main">
+    <main id="main" tabindex="-1">
       <section class="hero" aria-labelledby="hero-title">
         <video id="hero-clip-a" class="hero-video" muted playsinline preload="none" data-hero-slot="a" aria-hidden="true"></video>
         <video id="hero-clip-b" class="hero-video" muted playsinline preload="none" data-hero-slot="b" aria-hidden="true"></video>
@@ -312,14 +353,17 @@
 
         <div class="hero-inner section-shell">
           <div class="hero-content">
-            <p class="hero-kicker reveal" data-i18n="hero.kicker">AI researcher · 3D motion generation</p>
             <h1 id="hero-title" class="reveal">Zeyu Ling</h1>
             <div class="hero-identity reveal">
               <img src="avatar/avatar-portrait.webp" alt="Portrait of Zeyu Ling" width="216" height="303" decoding="async" fetchpriority="low" />
               <div>
-                <p data-i18n="hero.statement">Researcher in 3D human motion generation and multimodal generative models.</p>
+                <p data-i18n="hero.statement">I build generative systems that connect motion, language, audio, and physical intelligence.</p>
                 <span>凌泽宇 · Hangzhou, China</span>
               </div>
+            </div>
+            <div class="hero-actions reveal" aria-label="Primary actions">
+              <a class="hero-action hero-action-primary" href="#publications"><span data-i18n="hero.explore">Explore research</span><i data-lucide="arrow-down-right" aria-hidden="true"></i></a>
+              <a class="hero-action hero-action-secondary" href="mailto:zeyuling@zju.edu.cn"><span data-i18n="hero.email">Email me</span><i data-lucide="mail" aria-hidden="true"></i></a>
             </div>
             <div class="hero-links reveal" aria-label="Profile links">
               <a href="https://scholar.google.com/citations?hl=en&user=znEflnQAAAAJ" target="_blank" rel="noreferrer">
@@ -362,15 +406,14 @@
             title="Pause research reel"
             hidden
           >
-            <i data-lucide="pause" aria-hidden="true"></i>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5V19M16 5V19" /></svg>
           </button>
         </div>
       </section>
 
       <section class="about section-shell" id="about" aria-labelledby="about-title">
-        <div class="section-label"><span>01</span><p data-i18n="about.eyebrow">About</p></div>
         <div class="about-intro">
-          <h2 id="about-title" data-i18n="about.title">I work on 3D human motion generation.</h2>
+          <h2 id="about-title" data-i18n="about.title">I build multimodal systems for understanding, generating, and executing human motion.</h2>
           <p data-i18n="about.body">
             My research focuses on 3D human motion generation and multimodal generative models, including motion-language learning, human motion understanding, and text- or audio-conditioned synthesis for single-person and multi-person scenarios.
           </p>
@@ -411,8 +454,7 @@
 
       <section class="news-section section-shell" aria-labelledby="news-title">
         <div class="section-head compact-head">
-          <div class="section-label"><span>News</span></div>
-          <div><h2 id="news-title" data-i18n="news.title">Recent news</h2></div>
+          <h2 id="news-title" data-i18n="news.title">Recent news</h2>
         </div>
         <ol class="news-grid">
           <li><time>2026.08</time><span data-i18n="news.gentrack">GenTrack was released as an arXiv preprint.</span></li>
@@ -427,13 +469,15 @@
 
       <section class="publications section-shell" id="publications" aria-labelledby="publications-title">
         <div class="section-head publications-head">
-          <div class="section-label"><span>02</span><p data-i18n="publications.eyebrow">Research</p></div>
-          <div>
+          <div class="publications-heading-row">
             <h2 id="publications-title" data-i18n="publications.title">Publications</h2>
-            <div class="filter-tabs" role="group" aria-label="Filter publications">
-              <button class="filter-button active" type="button" data-filter="all" data-i18n="publications.all">All</button>
-              <button class="filter-button" type="button" data-filter="motion" data-i18n="publications.motion">Motion</button>
-              <button class="filter-button" type="button" data-filter="multimodal" data-i18n="publications.multimodal">Multimodal</button>
+            <div class="publication-controls">
+              <div class="filter-tabs" role="group" aria-label="Filter publications">
+                <button class="filter-button active" type="button" data-filter="all" data-i18n="publications.all" aria-pressed="true">All</button>
+                <button class="filter-button" type="button" data-filter="motion" data-i18n="publications.motion" aria-pressed="false">Motion</button>
+                <button class="filter-button" type="button" data-filter="multimodal" data-i18n="publications.multimodal" aria-pressed="false">Multimodal</button>
+              </div>
+              <p class="filter-status" data-filter-status role="status" aria-live="polite">7 publications</p>
             </div>
           </div>
         </div>
@@ -507,7 +551,7 @@
               </div>
               <div class="media-stage">
                 <div class="media-panel active" data-media-panel="figure"><img src="assets/synclipmae-figure.webp" alt="SyncLipMAE task overview" loading="lazy" decoding="async" fetchpriority="low" /></div>
-                <div class="media-panel" data-media-panel="demo" hidden><video controls muted loop playsinline preload="none" data-poster="assets/synclipmae-figure.webp" data-src="assets/synclipmae-demo.mp4"></video></div>
+                <div class="media-panel" data-media-panel="demo" hidden><video controls muted loop playsinline preload="none" data-poster="assets/synclipmae-figure.webp" data-src="assets/synclipmae-demo.mp4" aria-label="SyncLipMAE research demo"></video></div>
               </div>
             </div>
             <div class="paper-content">
@@ -527,7 +571,7 @@
               </div>
               <div class="media-stage">
                 <div class="media-panel active" data-media-panel="figure"><img src="assets/enchantdance-pipeline.webp" alt="EnchantDance method pipeline" loading="lazy" decoding="async" fetchpriority="low" /></div>
-                <div class="media-panel" data-media-panel="demo" hidden><video controls muted loop playsinline preload="none" data-poster="assets/enchantdance-poster.jpg" data-src="assets/enchantdance-demo.mp4"></video></div>
+                <div class="media-panel" data-media-panel="demo" hidden><video controls muted loop playsinline preload="none" data-poster="assets/enchantdance-poster.jpg" data-src="assets/enchantdance-demo.mp4" aria-label="EnchantDance research demo"></video></div>
               </div>
             </div>
             <div class="paper-content">
@@ -543,7 +587,7 @@
             <div class="paper-media">
               <div class="media-toolbar" role="tablist" aria-label="EPIC media">
                 <button class="media-tab active" type="button" data-media-target="figure" aria-selected="true"><i data-lucide="image"></i><span data-i18n="common.figure">Figure</span></button>
-                <button class="media-tab disabled" type="button" disabled title="No public video demo"><i data-lucide="video-off"></i><span data-i18n="common.noDemo">No public demo</span></button>
+                <button class="media-tab disabled" type="button" role="tab" aria-selected="false" aria-disabled="true" tabindex="-1" disabled title="No public video demo"><i data-lucide="video-off"></i><span data-i18n="common.noDemo">No public demo</span></button>
               </div>
               <div class="media-stage">
                 <div class="media-panel active" data-media-panel="figure"><img src="assets/epic-pipeline.webp" alt="EPIC method pipeline" loading="lazy" decoding="async" fetchpriority="low" /></div>
@@ -566,7 +610,7 @@
               </div>
               <div class="media-stage">
                 <div class="media-panel active" data-media-panel="figure"><img src="assets/mcm-pipeline.webp" alt="MCM method pipeline" loading="lazy" decoding="async" fetchpriority="low" /></div>
-                <div class="media-panel" data-media-panel="demo" hidden><video controls muted loop playsinline preload="none" data-poster="assets/mcm-poster.jpg?v=20260827" data-src="assets/mcm-demo.mp4?v=20260827"></video></div>
+                <div class="media-panel" data-media-panel="demo" hidden><video controls muted loop playsinline preload="none" data-poster="assets/mcm-poster.jpg?v=20260827" data-src="assets/mcm-demo.mp4?v=20260827" aria-label="MCM research demo"></video></div>
               </div>
             </div>
             <div class="paper-content">
@@ -587,8 +631,7 @@
       <section class="open-source" id="open-source" aria-labelledby="open-source-title">
         <div class="section-shell">
           <div class="section-head open-source-head">
-            <div class="section-label"><span>03</span><p data-i18n="openSource.eyebrow">Open source</p></div>
-            <div><h2 id="open-source-title" data-i18n="openSource.title">Research infrastructure</h2><p data-i18n="openSource.body">Reusable foundations for motion research, scalable model training, open datasets, and agent-assisted research workflows.</p></div>
+            <div><h2 id="open-source-title" data-i18n="openSource.title">Research infrastructure</h2><p data-i18n="openSource.body">Reusable foundations for multimodal research, scalable model training, open datasets, and agent-assisted research workflows.</p></div>
           </div>
 
           <div class="project-grid">
@@ -621,7 +664,7 @@
       <section class="contact" id="contact" aria-labelledby="contact-title">
         <div class="contact-inner section-shell">
           <img src="avatar/avatar-portrait.webp" alt="Zeyu Ling" width="216" height="303" loading="lazy" decoding="async" fetchpriority="low" />
-          <div class="contact-copy"><p class="eyebrow" id="contact-title" data-i18n="contact.eyebrow">Contact</p><p data-i18n="contact.body">I am glad to discuss generative AI, multimodal learning, embodied intelligence, and open research collaboration.</p></div>
+          <div class="contact-copy"><h2 id="contact-title" data-i18n="contact.eyebrow">Contact</h2><p data-i18n="contact.body">I am glad to discuss generative AI, multimodal learning, embodied intelligence, and open research collaboration.</p></div>
           <a class="contact-email" href="mailto:zeyuling@zju.edu.cn"><i data-lucide="mail"></i><span>zeyuling@zju.edu.cn</span><i data-lucide="arrow-up-right"></i></a>
         </div>
       </section>
@@ -629,7 +672,7 @@
 
     <footer class="site-footer section-shell">
       <p>© <span id="year"></span> Zeyu Ling</p>
-      <p data-i18n="footer.note">3D motion generation · multimodal learning</p>
+      <p data-i18n="footer.note">Generative AI · multimodal learning · embodied intelligence</p>
       <a href="#top" aria-label="Back to top" title="Back to top"><i data-lucide="arrow-up" aria-hidden="true"></i></a>
     </footer>
   </body>
