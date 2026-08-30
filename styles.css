@@ -19,8 +19,8 @@
   --shell: min(1180px, calc(100% - 48px));
   --radius-card: 12px;
   --radius-control: 8px;
-  --hero-reel-poster-desktop: url("assets/hero-clips/gentrack-01-poster.jpg?v=20260831b");
-  --hero-reel-poster-mobile: url("assets/hero-clips/gentrack-01-poster-mobile.jpg?v=20260831b");
+  --hero-reel-poster-desktop: url("assets/hero-clips/gentrack-01-poster.jpg?v=20260831c");
+  --hero-reel-poster-mobile: url("assets/hero-clips/gentrack-01-poster-mobile.jpg?v=20260831c");
   --hero-reel-crossfade: 560ms;
   color-scheme: light;
 }
@@ -714,6 +714,11 @@ iframe {
 
 .research-tags span:nth-child(n + 3) {
   border-top: 1px solid var(--line);
+}
+
+.research-tags span:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+  border-left: 0;
 }
 
 .profile-facts {
