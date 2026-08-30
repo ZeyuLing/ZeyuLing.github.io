@@ -28,7 +28,7 @@ jobs:
       - name: Stage static site
         run: |
           mkdir _site
-          cp index.html styles.css script.js .nojekyll _site/
+          cp index.html styles.css hero-montage.js script.js .nojekyll _site/
           cp -R assets avatar _site/
       - name: Upload site
         uses: actions/upload-pages-artifact@v3
