@@ -27,3 +27,5 @@ For the canonical `https://zeyuling.github.io` address, use a repository named `
 ## Public assets
 
 Motion previews come from the public [MotionHub repository](https://github.com/ZeyuLing/MotionHub). Research figures are derived from the author's paper presentation assets.
+
+MotionCanvas uses the paper's actual Figure 1, `figures/fig1_teaser.png`, from paper revision `95c4fb06783cb98e3547f592b468be91485c3d13` (Git blob `f0382162b844082a10b28c21cc4b614ea039b153`). The byte-identical website copy is `assets/motioncanvas-paper-teaser-f0382162.png`, used for both the figure and demo poster. Do not restore the retired `motioncanvas-teaser.png` presentation collage.
