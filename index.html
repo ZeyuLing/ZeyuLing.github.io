@@ -67,9 +67,18 @@
     </script>
     <script>
       (() => {
-        const assetVersion = "20260831c";
+        const assetVersion = "20260910-hero";
         const stateKey = `zeyu.heroMontage.${assetVersion}`;
         const projects = [
+          {
+            id: "motioncanvas",
+            title: "MotionCanvas",
+            variants: [
+              { id: "motioncanvas-01", sourceIn: 42, sourceOut: 45.8 },
+              { id: "motioncanvas-02", sourceIn: 70, sourceOut: 73.8 },
+              { id: "motioncanvas-03", sourceIn: 120, sourceOut: 123.8 }
+            ]
+          },
           {
             id: "gentrack",
             title: "GenTrack",
@@ -262,7 +271,7 @@
       />
     </noscript>
     <link rel="stylesheet" href="styles.css?v=20260831c" />
-    <script src="script.js?v=20260910-motioncanvas" defer></script>
+    <script src="script.js?v=20260910-hero-release" defer></script>
     <script>
       window.addEventListener(
         "load",
@@ -386,15 +395,21 @@
           </div>
 
           <nav class="hero-research-index reveal" aria-label="Selected research">
+            <a href="#motioncanvas">
+              <span class="hero-project-name">MotionCanvas</span>
+              <span class="hero-project-focus" data-i18n="hero.motioncanvasFocus">Composable motion control</span>
+              <span class="hero-project-year">2026.09</span>
+              <i data-lucide="arrow-down-right" aria-hidden="true"></i>
+            </a>
             <a href="#gentrack">
               <span class="hero-project-name">GenTrack</span>
-              <span class="hero-project-focus" data-i18n="hero.gentrackFocus">Robot-native generation</span>
+              <span class="hero-project-focus" data-i18n="hero.gentrackFocus">Motion generation &amp; robot control</span>
               <span class="hero-project-year">2026</span>
               <i data-lucide="arrow-down-right" aria-hidden="true"></i>
             </a>
             <a href="#prism">
               <span class="hero-project-name">PRISM</span>
-              <span class="hero-project-focus" data-i18n="hero.prismFocus">Structured motion manifold</span>
+              <span class="hero-project-focus" data-i18n="hero.prismFocus">Kinematic-unit motion generation</span>
               <span class="hero-project-year">2026</span>
               <i data-lucide="arrow-down-right" aria-hidden="true"></i>
             </a>
@@ -424,7 +439,7 @@
             <span class="live-dot"></span>
             <span data-i18n="hero.caption">Selected research demos</span>
             <strong data-hero-reel-title>Research</strong>
-            <span data-hero-reel-index>01 / 04</span>
+            <span data-hero-reel-index>01 / 05</span>
           </div>
           <button
             class="icon-button hero-reel-toggle"
@@ -486,7 +501,7 @@
           <h2 id="news-title" data-i18n="news.title">Recent news</h2>
         </div>
         <ol class="news-grid">
-          <li><time datetime="2026-09-09">2026.09</time><span data-i18n="news.motioncanvas">MotionCanvas was released with a paper and full video demo.</span></li>
+          <li><time datetime="2026-09-09">2026.09</time><span data-i18n="news.motioncanvas">MotionCanvas was released as an arXiv preprint.</span></li>
           <li><time>2026.08</time><span data-i18n="news.gentrack">GenTrack was released as an arXiv preprint.</span></li>
           <li><time>2026.03</time><span data-i18n="news.prism">PRISM was released as an arXiv preprint.</span></li>
           <li><time>2026</time><span data-i18n="news.versatile">VersatileMotion was accepted to ECCV 2026.</span></li>
@@ -528,7 +543,7 @@
               </div>
             </div>
             <div class="paper-content">
-              <div class="paper-meta"><span class="venue venue-coral">arXiv 2026</span><span data-i18n="common.firstAuthor">First author</span><span data-i18n="papers.motioncanvasStatus">Submitted to ICLR 2027</span></div>
+              <div class="paper-meta"><span class="venue venue-coral">arXiv 2026.09</span><span data-i18n="common.firstAuthor">First author</span></div>
               <h3>MotionCanvas: Learning Implicit Motion Planning from Composable Kinematic Cues</h3>
               <p class="paper-authors"><strong>Zeyu Ling</strong>, Di Kang, Qing Shuai, Yuxin Wen, Jing Li, Zhanke Wang, Heng Li, Changqing Zou, Chunchao Guo, Linchao Bao</p>
               <p class="paper-summary" data-i18n="papers.motioncanvas">A shared motion canvas and flow-matching model turn composable kinematic cues into coherent full-body motion, supporting mixed-cue control, editing, sequential generation, and repair.</p>
