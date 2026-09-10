@@ -262,7 +262,7 @@
       />
     </noscript>
     <link rel="stylesheet" href="styles.css?v=20260831c" />
-    <script src="script.js?v=20260831c" defer></script>
+    <script src="script.js?v=20260910-motioncanvas" defer></script>
     <script>
       window.addEventListener(
         "load",
@@ -486,6 +486,7 @@
           <h2 id="news-title" data-i18n="news.title">Recent news</h2>
         </div>
         <ol class="news-grid">
+          <li><time datetime="2026-09-09">2026.09</time><span data-i18n="news.motioncanvas">MotionCanvas was released with a paper and full video demo.</span></li>
           <li><time>2026.08</time><span data-i18n="news.gentrack">GenTrack was released as an arXiv preprint.</span></li>
           <li><time>2026.03</time><span data-i18n="news.prism">PRISM was released as an arXiv preprint.</span></li>
           <li><time>2026</time><span data-i18n="news.versatile">VersatileMotion was accepted to ECCV 2026.</span></li>
@@ -509,12 +510,32 @@
                 <button class="filter-button" type="button" data-filter="motion" data-i18n="publications.motion" aria-pressed="false">Motion</button>
                 <button class="filter-button" type="button" data-filter="multimodal" data-i18n="publications.multimodal" aria-pressed="false">Multimodal</button>
               </div>
-              <p class="filter-status" data-filter-status role="status" aria-live="polite">7 publications</p>
+              <p class="filter-status" data-filter-status role="status" aria-live="polite">8 publications</p>
             </div>
           </div>
         </div>
 
         <div class="publication-list">
+          <article class="paper-item paper-featured paper-featured-lead" id="motioncanvas" data-category="motion">
+            <div class="paper-media">
+              <div class="media-toolbar" role="tablist" aria-label="MotionCanvas media">
+                <button class="media-tab active" type="button" data-media-target="figure" aria-selected="true"><i data-lucide="image"></i><span data-i18n="common.figure">Figure</span></button>
+                <button class="media-tab" type="button" data-media-target="demo" aria-selected="false"><i data-lucide="play"></i><span data-i18n="common.demo">Demo</span></button>
+              </div>
+              <div class="media-stage media-stage-contain">
+                <div class="media-panel active" data-media-panel="figure"><img src="assets/motioncanvas-teaser.png" alt="MotionCanvas full-body motion generation from composable kinematic cues" loading="lazy" decoding="async" fetchpriority="low" /></div>
+                <div class="media-panel" data-media-panel="demo" hidden><video controls playsinline preload="none" data-poster="assets/motioncanvas-teaser.png" data-src="https://zeyuling.github.io/MotionCanvas/assets/media/motioncanvas-v54-editorial-1080p.mp4" aria-label="MotionCanvas complete research demo"></video></div>
+              </div>
+            </div>
+            <div class="paper-content">
+              <div class="paper-meta"><span class="venue venue-coral">arXiv 2026</span><span data-i18n="common.firstAuthor">First author</span><span data-i18n="papers.motioncanvasStatus">Submitted to ICLR 2027</span></div>
+              <h3>MotionCanvas: Learning Implicit Motion Planning from Composable Kinematic Cues</h3>
+              <p class="paper-authors"><strong>Zeyu Ling</strong>, Di Kang, Qing Shuai, Yuxin Wen, Jing Li, Zhanke Wang, Heng Li, Changqing Zou, Chunchao Guo, Linchao Bao</p>
+              <p class="paper-summary" data-i18n="papers.motioncanvas">A shared motion canvas and flow-matching model turn composable kinematic cues into coherent full-body motion, supporting mixed-cue control, editing, sequential generation, and repair.</p>
+              <div class="paper-links"><a href="https://arxiv.org/abs/2609.10457" target="_blank" rel="noreferrer"><i data-lucide="file-text"></i>Paper</a><a href="https://zeyuling.github.io/MotionCanvas/" target="_blank" rel="noreferrer"><i data-lucide="external-link"></i>Project</a><a href="https://zeyuling.github.io/MotionCanvas/#demo" target="_blank" rel="noreferrer"><i data-lucide="play"></i>Demo</a></div>
+            </div>
+          </article>
+
           <article class="paper-item paper-featured paper-featured-lead" id="gentrack" data-category="motion">
             <div class="paper-media">
               <div class="media-toolbar" role="tablist" aria-label="GenTrack media">
