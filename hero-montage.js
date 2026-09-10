@@ -62,6 +62,7 @@
   let transitionTimer = 0;
   let resumePosition = 0;
   let resumeTime = 0;
+  let incomingPreparation = null;
   const failedSources = new Set();
 
   const emptyController = {
@@ -270,6 +271,9 @@
     slot.position = position;
     slot.mode = mode;
     video.muted = true;
+    // The bootstrap enables autoplay on slot A. Once this controller owns it,
+    // preloading must not start an invisible clip before its transition.
+    video.autoplay = false;
     video.loop = false;
     video.preload = "auto";
     video.poster = posterFor(clip, mode);
@@ -414,7 +418,17 @@
     return `${sourceMode()}:${sourceFor(clip)}`;
   }
 
-  async function prepareIncoming() {
+  function prepareIncoming() {
+    if (incomingPreparation) return incomingPreparation;
+    const pending = prepareIncomingOnce();
+    incomingPreparation = pending;
+    pending.finally(() => {
+      if (incomingPreparation === pending) incomingPreparation = null;
+    });
+    return pending;
+  }
+
+  async function prepareIncomingOnce() {
     if (!playlist.length || !canPlayNow() || transitioning) return { ok: false, reason: "suspended" };
 
     const localGeneration = generation;
@@ -440,7 +454,8 @@
           : await incomingSlot.promise;
         if (localGeneration !== generation) return { ok: false, reason: "cancelled" };
         if (result?.ok) return { ...result, position };
-        if (result?.reason === "error") {
+        if (result?.reason === "cancelled") return result;
+        if (result?.reason === "error" || result?.reason === "timeout" || !result) {
           failedSources.add(failureKey);
         }
         continue;
@@ -452,7 +467,7 @@
         incomingSlot.element.dataset.heroSlotRole = "incoming";
         return { ...result, position };
       }
-      if (result.reason === "error") failedSources.add(failureKey);
+      if (result.reason === "error" || result.reason === "timeout") failedSources.add(failureKey);
       if (result.reason === "cancelled") return result;
     }
 
@@ -517,10 +532,8 @@
     const prepared = await prepareIncoming();
     if (localGeneration !== generation || revision !== transitionRevision || !prepared.ok) {
       if (localGeneration === generation && revision === transitionRevision) transitionPending = false;
-      if (prepared.reason === "exhausted" && localGeneration === generation) {
-        activeSlot().element.pause();
-        setHeroState("waiting-next");
-        syncControl();
+      if (localGeneration === generation && revision === transitionRevision && canPlayNow()) {
+        recoverTransition();
       }
       return;
     }
@@ -534,13 +547,14 @@
     const outgoing = slots[outgoingIndex].element;
     const incoming = slots[incomingIndex].element;
     try {
-      await incoming.play();
+      await playWithDeadline(incoming);
     } catch {
       if (localGeneration === generation && revision === transitionRevision) {
         transitionPending = false;
         if (canPlayNow()) {
-          setHeroState("paused");
-          syncControl();
+          failedSources.add(sourceFailureKey(slots[incomingIndex].clip));
+          releaseSlot(slots[incomingIndex]);
+          recoverTransition();
         }
       }
       return;
@@ -571,6 +585,33 @@
     );
   }
 
+  // A loaded clip remains usable even if the next request fails. Replay it
+  // instead of leaving the hero permanently parked on its final frame.
+  function recoverTransition() {
+    if (!canPlayNow()) return;
+    const localGeneration = generation;
+    const video = activeSlot().element;
+    video.currentTime = 0;
+    setHeroState("waiting-next");
+    void playWithDeadline(video).then(() => {
+      if (localGeneration !== generation || !canPlayNow()) return;
+      setHeroState("playing");
+      syncControl();
+      scheduleAdvance();
+    }).catch(() => {
+      if (localGeneration === generation && canPlayNow()) enterRetryMode();
+    });
+    // Bad sources are skipped for this pass, not blacklisted forever.
+    if (failedSources.size >= playlist.length - 1) failedSources.clear();
+  }
+
+  function playWithDeadline(video) {
+    return new Promise((resolve, reject) => {
+      const timer = window.setTimeout(() => reject(new Error("Video playback timed out")), INCOMING_BUDGET_MS);
+      Promise.resolve(video.play()).then(resolve, reject).finally(() => window.clearTimeout(timer));
+    });
+  }
+
   async function playMontage() {
     if (!initialized || policyIsStatic || unavailable || pausedByUser || !inView || document.hidden) return;
     if (!activeSlot().ready) {
@@ -580,7 +621,7 @@
 
     const localGeneration = generation;
     try {
-      await activeSlot().element.play();
+      await playWithDeadline(activeSlot().element);
     } catch {
       setHeroState("paused");
       syncControl();
@@ -597,6 +638,7 @@
   }
 
   function pauseMontage({ releaseIncoming = true } = {}) {
+    incomingPreparation = null;
     clearAdvanceTimer();
     clearCaptionTimer();
     if (transitionPending) {
@@ -611,6 +653,7 @@
   }
 
   function enterStaticMode({ permanent = false, preservePosition = true } = {}) {
+    incomingPreparation = null;
     if (preservePosition && activeSlot().ready) {
       resumePosition = playlistPosition;
       resumeTime = Number.isFinite(activeSlot().element.currentTime) ? activeSlot().element.currentTime : 0;
@@ -633,6 +676,7 @@
   }
 
   function enterRetryMode() {
+    incomingPreparation = null;
     starting = false;
     transitionPending = false;
     transitioning = false;
@@ -650,6 +694,7 @@
     if (!playlist.length || policyIsStatic || unavailable) return;
 
     const localGeneration = ++generation;
+    incomingPreparation = null;
     transitionRevision += 1;
     starting = true;
     transitionPending = false;
