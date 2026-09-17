@@ -28,7 +28,7 @@ For the canonical `https://zeyuling.github.io` address, use a repository named `
 
 Motion previews come from the public [MotionHub repository](https://github.com/ZeyuLing/MotionHub). Research figures are derived from the author's paper presentation assets.
 
-AnimateCanvas uses the paper's actual Figure 1, `figures/fig1_teaser.png`, from paper revision `95c4fb06783cb98e3547f592b468be91485c3d13` (Git blob `f0382162b844082a10b28c21cc4b614ea039b153`). The byte-identical website copy is `assets/motioncanvas-paper-teaser-f0382162.png`, used for both the figure and demo poster. Do not restore the retired `motioncanvas-teaser.png` presentation collage.
+AnimateCanvas uses the author-approved v17 paper teaser, published as `figures/fig1_teaser.png` in Overleaf commit `068375945fdd870b8293e6e673024bf711f2b83b` on 2026-09-15. The byte-identical website copy is `assets/animatecanvas-paper-teaser-v17.png`, used for both the figure and demo poster. Source: `HYMotionM2M/figures/teaser_real/20260913/final_v17/animatecanvas_teaser_smpl_v17.png`. Do not restore the superseded teaser assets.
 
 The hero montage includes AnimateCanvas, GenTrack, PRISM, VersatileMotion and SyncLipMAE. AnimateCanvas's three 3.8-second background variants come from the public `animatecanvas-demo-1080p.mp4` demo at 32, 70 and 146 seconds (route control, jump, and basketball). Each has fast-start, muted desktop/mobile encodes and matching posters. The publication also plays the full V56 demo, without trimming. Reloads choose a different variant per project as well as a new order; this is a finite clip pool, not arbitrary runtime video editing. MCM and EnchantDance are excluded from the background pool.
 
