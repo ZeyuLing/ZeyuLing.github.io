@@ -271,7 +271,7 @@
       />
     </noscript>
     <link rel="stylesheet" href="styles.css?v=20260831c" />
-    <script src="script.js?v=20260913-animatecanvas" defer></script>
+    <script src="script.js?v=20261012-flowhmr" defer></script>
     <script>
       window.addEventListener(
         "load",
@@ -501,6 +501,7 @@
           <h2 id="news-title" data-i18n="news.title">Recent news</h2>
         </div>
         <ol class="news-grid">
+          <li><time datetime="2026-10-02">2026.10</time><span data-i18n="news.flowhmr">FlowHMR was released as an arXiv preprint, with its project page, code, and demo available.</span></li>
           <li><time datetime="2026-09-09">2026.09</time><span data-i18n="news.motioncanvas">AnimateCanvas was released as an arXiv preprint.</span></li>
           <li><time>2026.08</time><span data-i18n="news.gentrack">GenTrack was released as an arXiv preprint.</span></li>
           <li><time>2026.03</time><span data-i18n="news.prism">PRISM was released as an arXiv preprint.</span></li>
@@ -525,7 +526,7 @@
                 <button class="filter-button" type="button" data-filter="motion" data-i18n="publications.motion" aria-pressed="false">Motion</button>
                 <button class="filter-button" type="button" data-filter="multimodal" data-i18n="publications.multimodal" aria-pressed="false">Multimodal</button>
               </div>
-              <p class="filter-status" data-filter-status role="status" aria-live="polite">8 publications</p>
+              <p class="filter-status" data-filter-status role="status" aria-live="polite">9 publications</p>
             </div>
           </div>
         </div>
@@ -608,6 +609,26 @@
               <p class="paper-authors"><strong>Zeyu Ling</strong>, Bo Han, Shiyang Li, Hongdeng Shen, Jikang Cheng, Changqing Zou</p>
               <p class="paper-summary" data-i18n="papers.versatile">A motion-language framework that unifies synthesis and comprehension across single-person and multi-person tasks.</p>
               <div class="paper-links"><a href="https://arxiv.org/abs/2411.17335" target="_blank" rel="noreferrer"><i data-lucide="file-text"></i>Paper</a><a href="https://github.com/ZeyuLing/versatilemotion" target="_blank" rel="noreferrer"><i data-lucide="github"></i>Code</a><a href="assets/versatilemotion-demo.mp4?v=20260830a" target="_blank" rel="noreferrer"><i data-lucide="play"></i>Demo</a></div>
+            </div>
+          </article>
+
+          <article class="paper-item paper-featured paper-featured-reverse" id="flowhmr" data-category="motion">
+            <div class="paper-media">
+              <div class="media-toolbar" role="tablist" aria-label="FlowHMR media">
+                <button class="media-tab active" type="button" data-media-target="figure" aria-selected="true"><i data-lucide="image"></i><span data-i18n="common.teaser">Teaser</span></button>
+                <button class="media-tab" type="button" data-media-target="demo" aria-selected="false"><i data-lucide="play"></i><span data-i18n="common.demo">Demo</span></button>
+              </div>
+              <div class="media-stage media-stage-contain">
+                <div class="media-panel active" data-media-panel="figure"><img src="assets/flowhmr-figure1.png" alt="FlowHMR paper Figure 1: two monocular videos, reconstructed 3D human motion, and physics-tracked motion" loading="lazy" decoding="async" fetchpriority="low" /></div>
+                <div class="media-panel" data-media-panel="demo" hidden><video controls playsinline preload="none" data-poster="assets/flowhmr-demo-poster.jpg" data-src="https://flowhmr.github.io/assets/media/flowhmr-demo.mp4" aria-label="FlowHMR complete official research demo"></video></div>
+              </div>
+            </div>
+            <div class="paper-content">
+              <div class="paper-meta"><span class="venue venue-coral">arXiv 2026.10</span><span data-i18n="common.coAuthor">Co-author</span></div>
+              <h3>FlowHMR: Physically Plausible Motion Capture from Video</h3>
+              <p class="paper-authors">Zhanke Wang, Chengfeng Zhao, Qing Shuai, Jingzhong Lin, Heng Li, <strong>Zeyu Ling</strong>, Yuxin Wen, Jing Li, Di Kang, Chunchao Guo, Linchao Bao</p>
+              <p class="paper-summary" data-i18n="papers.flowhmr">A video-conditioned flow-matching model recovers global 3D human motion from monocular video; physics-based post-training improves trackability while preserving fidelity to the input.</p>
+              <div class="paper-links"><a href="https://arxiv.org/abs/2610.03691" target="_blank" rel="noreferrer"><i data-lucide="file-text"></i>Paper</a><a href="https://flowhmr.github.io/" target="_blank" rel="noreferrer"><i data-lucide="external-link"></i>Project</a><a href="https://github.com/flowhmr/flowhmr" target="_blank" rel="noreferrer"><i data-lucide="github"></i>Code</a><a href="https://flowhmr.github.io/#demo" target="_blank" rel="noreferrer"><i data-lucide="play"></i>Demo</a></div>
             </div>
           </article>
 
